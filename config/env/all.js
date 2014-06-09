@@ -29,10 +29,10 @@ module.exports = {
 			]
 		},
 		css: [
-			'public/modules/**/css/*.css'
+			'public/modules/*/less/*.css'
 		],
 		less: [
-            'public/modules/**/less/*.less'
+            'public/modules/*/less/*.less'
         ],
 		js: [
 			'public/config.js',

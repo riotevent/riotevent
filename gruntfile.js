@@ -85,7 +85,7 @@ module.exports = function(grunt) {
 		less: {
 			development: {
 				files: {
-					'public/dist/modules.css': '<%= applicationLESSFiles %>'
+					'<%= applicationCSSFiles %>': '<%= applicationLESSFiles %>'
 				}
 			}
 		},
@@ -168,7 +168,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('debug', ['lint', 'concurrent:debug']);
 
 	// Lint task(s).
-	grunt.registerTask('lint', ['jshint', 'csslint']);
+	grunt.registerTask('lint', ['jshint', 'less', 'csslint']);
 
 	// Build task(s).
 	grunt.registerTask('build', ['lint', 'loadConfig', 'ngmin', 'uglify', 'cssmin']);
