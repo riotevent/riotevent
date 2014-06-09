@@ -10,8 +10,20 @@ var mongoose = require('mongoose'),
  * Comment Schema
  */
 var CommentSchema = new Schema({
-	// Comment model fields   
-	// ...
+	name: {
+		type: String,
+		default: '',
+		required: 'Please fill Comment name',
+		trim: true
+	},
+	created: {
+		type: Date,
+		default: Date.now
+	},
+	user: {
+		type: Schema.ObjectId,
+		ref: 'User'
+	}
 });
 
 mongoose.model('Comment', CommentSchema);
