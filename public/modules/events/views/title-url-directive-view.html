@@ -1,0 +1,20 @@
+<div class="form-group">
+	<div class="controls">
+		<input type="text" ng-model="title" id="title" class="form-control big-input" placeholder="Enter the title of your event" ng-change="fill_address()" required>
+	</div>
+</div>
+
+<div class="row form-group" ng-animate="'fade'" ng-show="title">
+	<div class="col-xs-1 col-url-1">
+		<input type="checkbox" ng-model="lock_input">
+		<i ng-class="{fa: true, 'fa-lock': lock_input, 'fa-unlock': !lock_input}"></i>
+	</div>
+	<div class="col-xs-11 col-url-11">
+		<p class="input-group">
+			<span class="input-group-btn">
+				<button type="button" class="btn btn-default little-input btn-fake" ng-bind="event_path"></button>
+			</span>
+			<input type="text" data-ng-model="url" id="url" class="form-control little-input" placeholder="Web address of the event" ng-disabled="lock_input" required>
+		</p>
+	</div>
+</div>
