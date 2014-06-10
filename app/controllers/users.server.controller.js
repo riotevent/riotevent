@@ -267,6 +267,18 @@ exports.hasAuthorization = function(roles) {
 	};
 };
 
+
+// /**
+//  * Event authorization by name
+//  */
+// exports.hasName = function(req, res, next) {
+// 	debugger;
+// 	if (!mongoose.find(req.user.id)) {
+// 		return res.send(403, 'User needs a name for this');
+// 	}
+// 	next();
+// };
+
 /**
  * Helper function to save or update a OAuth user profile
  */
