@@ -15,6 +15,7 @@ module.exports = {
 			css: [
 				'public/lib/bootstrap/dist/css/bootstrap.css',
 				'public/lib/bootstrap/dist/css/bootstrap-theme.css',
+				'public/lib/font-awesome/css/font-awesome.css'
 			],
 			js: [
 				'public/lib/angular/angular.js',
@@ -29,7 +30,7 @@ module.exports = {
 			]
 		},
 		css: [
-			'public/modules/*/less/*.css'
+			'public/modules/*/less/*.css',
 		],
 		less: [
             'public/modules/*/less/*.less'
