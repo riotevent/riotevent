@@ -10,19 +10,34 @@ var mongoose = require('mongoose'),
  * Comment Schema
  */
 var CommentSchema = new Schema({
-	name: {
+	text: {
 		type: String,
 		default: '',
-		required: 'Please fill Comment name',
+		required: 'Comment is useful if it has text!',
 		trim: true
+	},
+	category: {
+		type: String
+	},
+	parent_comment: {
+		type: Schema.ObjectId,
+		ref: 'Comment'
+	},
+	user: {
+		type: Schema.ObjectId,
+		ref: 'User'
+	},
+	event: {
+		type: Schema.ObjectId,
+		ref: 'Event'
 	},
 	created: {
 		type: Date,
 		default: Date.now
 	},
-	user: {
-		type: Schema.ObjectId,
-		ref: 'User'
+	updated: {
+		type: Date,
+		default: Date.now
 	}
 });
 
