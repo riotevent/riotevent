@@ -6,7 +6,7 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
 		$scope.authentication = Authentication;
 
 		//SELECT TAGS CATEGORY
-		$scope.comment_cat = ['General discussion']
+		$scope.comment_cat = ['General discussion'];
 		$scope.select2Options = {
 			'multiple': true,
         	'simple_tags': true,
@@ -17,8 +17,19 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
 		$scope.create = function() {
 			// Create new Event object
 			var event = new Events ({
-				name: this.name
+				title: this.title,
+				url: this.url,
+				start_datetime : this.start_datetime,
+				end_datetime : this.end_datetime,
+				time_description : this.time_description,
+				image : this.image,
+				description : this.description,
+				location_name : this.location_name,
+				location_latitude : $scope.markers.marker ? $scope.markers.marker.lat : null,
+				location_longitude : $scope.markers.marker ? $scope.markers.marker.lng : null,
+				pass : this.pass
 			});
+			console.log(this.image);
 
 			// Redirect after save
 			event.$save(function(response) {

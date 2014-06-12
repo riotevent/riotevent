@@ -102,13 +102,13 @@ angular.module('events').directive('mapForm', function ($http) {
 			var app_email = 'remiclaude@free.fr';
 
 			$scope.enter_searchaddress = function (event) {
-				if (event.which==13) $scope.searchaddress ();
-			}
+				if (event.which === 13) $scope.searchaddress ();
+			};
 
 
 			$scope.searchaddress = function () {
 				$http
-				.get('http://nominatim.openstreetmap.org/search?q=' + $scope.location_input.replace(/ /g , '+') + '&format=json&limit=1&email=' + app_email)
+				.get('http://nominatim.openstreetmap.org/search?q=' + $scope.location_name.replace(/ /g , '+') + '&format=json&limit=1&email=' + app_email)
 					.success(function(data) {
 						if(data[0] && parseFloat(data[0].importance) > 0.5 ) {
 
@@ -128,7 +128,7 @@ angular.module('events').directive('mapForm', function ($http) {
 							$scope.bounds.northEast.lng = parseFloat(data[0].boundingbox[3]);
 						}
 					});
-			}
+			};
 
 		}
 			 }

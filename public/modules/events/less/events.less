@@ -1,11 +1,15 @@
 @event-orange :#fa0;
+@event-blue :#007dd8;
+@event-grey :#e0e0e0;
+
  body {
 	.section-create-event {
 		max-width: 800px;
-		margin: 80px auto 0 auto;
+		margin: 0 auto 0 auto;
 		.form-event-creation {
 			.title-info{
-				color: #007dd8
+				color: @event-blue;
+				cursor: pointer;
 			}
 			.col-url-1 {
 				padding-left: 3px;
@@ -56,13 +60,13 @@
 			}
 			.btn-fake {
 				cursor: default;
-				background-color: #E0E0E0;
+				background-color: @event-grey;
 				background-image: none;
 			}
 			.btn-submit{
 				width: 100%;
 				background-image: none;
-				background-color: #E0E0E0;
+				background-color: @event-grey;
 				border-radius: 0px;
 			}
 			.btn-submit:hover{
