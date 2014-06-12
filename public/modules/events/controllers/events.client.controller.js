@@ -5,6 +5,14 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
 	function($scope, $stateParams, $location, Authentication, Events ) {
 		$scope.authentication = Authentication;
 
+		//SELECT TAGS CATEGORY
+		$scope.comment_cat = ['General discussion']
+		$scope.select2Options = {
+			'multiple': true,
+        	'simple_tags': true,
+        	'tags': ['General discussion', 'Ride sharing', 'Hospitality']  // Can be empty list.
+    	};
+
 		// Create new Event
 		$scope.create = function() {
 			// Create new Event object

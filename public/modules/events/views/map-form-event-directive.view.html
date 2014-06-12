@@ -1,0 +1,12 @@
+<div class="form-group" id="Location" ng-show="true">
+	<p class="input-group">
+		<input type="text" ng-model="location_input" class="form-control big-input" placeholder="Enter full address here" ng-keypress="enter_searchaddress($event)" />
+		<span class="input-group-btn">
+			<button type="button" class="btn btn-default big-input btn-fake" ng-click="searchaddress()">
+				<i class="fa fa-lg fa-map-marker"></i>
+			</button>
+		</span>
+	</p>
+	<br />
+	<leaflet center="hostmap" layers="layers" height="400px" width="100%" bounds="bounds" markers="markers"></leaflet>
+</div>
