@@ -19,21 +19,25 @@ var EventSchema = new Schema({
 	description: {
 		type: String,
 		default: '',
+		required: 'Please fill Event description',
 		trim: true
 	},
 	url: {
 		type: String,
 		default: '',
+		required: 'Please fill Event address',
 		trim: true
 	},
 	time_description: {
 		type: String,
 		default: '',
+		required: 'Please fill Event time',
 		trim: true
 	},
 	location_name: {
 		type: String,
 		default: '',
+		required: 'Please fill Event location',
 		trim: true
 	},
 	location_latittude: {
@@ -44,15 +48,17 @@ var EventSchema = new Schema({
 	},
 	start_datetime: {
 		type: Date,
-		default: Date.now
+		default: '',
+		required: 'Please fill Event starting date'
 	},
 	end_datetime: {
 		type: Date,
-		default: Date.now
+		default: ''
 	},
 	image: { 
-		mime: String, 
-		bin: Buffer 
+		type: String,
+		bin: Buffer,
+		required: 'Please choose Event image'
 	},
 	pass: {
 		type: String,
@@ -69,6 +75,9 @@ var EventSchema = new Schema({
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'
+	},
+	comment_cat: {
+		type: Array
 	}
 });
 
