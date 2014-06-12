@@ -7,9 +7,12 @@ module.exports = {
 			css: [
 				'public/lib/bootstrap/dist/css/bootstrap.min.css',
 				'public/lib/bootstrap/dist/css/bootstrap-theme.min.css',
-				'public/lib/font-awesome/css/font-awesome.min.css'
+				'public/lib/font-awesome/css/font-awesome.min.css',
+				'public/lib/leaflet-dist/leaflet.css',
+				'public/lib/select2/select2.css'
 			],
 			js: [
+				'public/lib/jquery/jquery.min.js',
 				'public/lib/angular/angular.min.js',
 				'public/lib/angular-resource/angular-resource.js',
 				'public/lib/angular-cookies/angular-cookies.js',
@@ -18,7 +21,13 @@ module.exports = {
 				'public/lib/angular-sanitize/angular-sanitize.js',
 				'public/lib/angular-ui-router/release/angular-ui-router.min.js',
 				'public/lib/angular-ui-utils/ui-utils.min.js',
-				'public/lib/angular-bootstrap/ui-bootstrap-tpls.min.js'
+				'public/lib/angular-bootstrap/ui-bootstrap-tpls.min.js',
+				'public/lib/textAngular/dist/textAngular-sanitize.min.js',
+				'public/lib/textAngular/dist/textAngular.min.js',
+				'public/lib/leaflet-dist/leaflet.js',
+				'public/lib/angular-leaflet-directive/dist/angular-leaflet-directive.min.js',
+				'public/lib/select2/select2.min.js',
+				'public/lib/angular-ui-select2/src/select2.js'
 			]
 		},
 		css: 'public/dist/application.min.css',
