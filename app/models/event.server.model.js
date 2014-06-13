@@ -44,15 +44,15 @@ var EventSchema = new Schema({
 	},
 	start_datetime: {
 		type: Date,
-		default: Date.now
+		default: '',
 	},
 	end_datetime: {
 		type: Date,
-		default: Date.now
+		default: ''
 	},
 	image: { 
-		mime: String, 
-		bin: Buffer 
+		type: String,
+		bin: Buffer,
 	},
 	pass: {
 		type: String,
@@ -69,6 +69,9 @@ var EventSchema = new Schema({
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'
+	},
+	comment_cats: {
+		type: Array
 	}
 });
 

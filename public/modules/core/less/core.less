@@ -1,9 +1,32 @@
+@event-orange-grey :#fae9b8;
+
 section.content {
 	margin-top: 50px;
+	padding-bottom: 50px;
 }
 .undecorated-link:hover {
 	text-decoration: none;
 }
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
 	display: none !important;
+}
+
+.row-riot-head{
+	margin-top: 20px;
+	.col-riot-head{
+		border: 10px;
+	}
+	.col-riot-head:hover{
+		.jumbotron{
+			background-color: @event-orange-grey;
+			cursor: pointer;
+		}
+	}
+}
+
+a{
+	color: black;
+}
+a:hover{
+	text-decoration: none;
 }

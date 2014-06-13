@@ -1,10 +1,10 @@
 <div class="form-group">
 	<div class="controls">
-		<input type="text" ng-model="title" id="title" class="form-control big-input" placeholder="Enter the title of your event" ng-change="fill_address()" required>
+		<input type="text" data-ng-model="title" id="title" name="title" class="form-control big-input" placeholder="Enter the title of your event" ng-change="fill_address()" required>
 	</div>
 </div>
 
-<div class="row form-group" ng-animate="'fade'" ng-show="title">
+<div class="row form-group">
 	<div class="col-xs-1 col-url-1">
 		<input type="checkbox" ng-model="lock_input">
 		<i ng-class="{fa: true, 'fa-lock': lock_input, 'fa-unlock': !lock_input}"></i>
@@ -18,3 +18,4 @@
 		</p>
 	</div>
 </div>
+
