@@ -15,5 +15,5 @@ module.exports = function(app) {
 		.delete(users.requiresLogin, events.hasAuthorization, events.delete);
 
 	// Finish by binding the Event middleware
-	app.param('eventId', events.eventByID);
+	app.param('eventId', events.eventByURL);
 };
