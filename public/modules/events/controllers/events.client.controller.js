@@ -29,11 +29,10 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
 				location_longitude : $scope.markers.marker ? $scope.markers.marker.lng : null,
 				pass : this.pass
 			});
-			console.log(this.image);
 
 			// Redirect after save
 			event.$save(function(response) {
-				$location.path('events/' + response._id);
+				$location.path('events/' + response.url);
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
@@ -77,8 +76,10 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
 		// Find existing Event
 		$scope.findOne = function() {
 			$scope.event = Events.get({
-				eventId: $stateParams.eventId
+				url: $stateParams.url
 			});
+			console.log($stateParams.url);
+			console.log($scope.event);
 		};
 	}
 ]);

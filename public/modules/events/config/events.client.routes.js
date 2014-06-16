@@ -14,7 +14,7 @@ angular.module('events').config(['$stateProvider',
 			templateUrl: 'modules/events/views/create-event.client.view.html'
 		}).
 		state('viewEvent', {
-			url: '/events/:eventId',
+			url: '/events/:url',
 			templateUrl: 'modules/events/views/view-event.client.view.html'
 		}).
 		state('editEvent', {

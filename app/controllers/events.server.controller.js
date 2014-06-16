@@ -110,7 +110,7 @@ exports.list = function(req, res) { Event.find().sort('-created').populate('user
  * Event middleware
  */
 exports.eventByURL = function(req, res, next, url) {
-	Event.find({ url: url}).populate('user', 'displayName').exec(function(err, event) {
+	Event.findOne({ url: url}).populate('user', 'displayName').exec(function(err, event) {
 		if (err) return next(err);
 		if (! event) return next(new Error('Failed to load Event ' + url));
 		req.event = event ;
