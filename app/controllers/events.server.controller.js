@@ -3,7 +3,7 @@
 /**
  * Module dependencies.
  */
-var mongoose = require('mongoose')
+var mongoose = require('mongoose'),
     Event = mongoose.model('Event'),
     _ = require('lodash');
 
