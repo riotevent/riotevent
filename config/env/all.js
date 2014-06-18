@@ -36,7 +36,8 @@ module.exports = {
 				'public/lib/leaflet-dist/leaflet-src.js',
 				'public/lib/angular-leaflet-directive/dist/angular-leaflet-directive.js',
 				'public/lib/select2/select2.js',
-				'public/lib/angular-ui-select2/src/select2.js'
+				'public/lib/angular-ui-select2/src/select2.js',
+                'public/lib/ng-file-upload/angular-file-upload.js'
 			]
 		},
 		css: [

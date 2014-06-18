@@ -19,6 +19,7 @@
     "textAngular": "~1.2.1",
     "angular-leaflet-directive": "~0.7.7",
     "angular-ui-select2": "~0.0.5",
-    "select2": "~3.4.8"
+    "select2": "~3.4.8",
+    "ng-file-upload": "~1.4.0"
   }
 }

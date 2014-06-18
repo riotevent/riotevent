@@ -9,6 +9,10 @@ module.exports = function(app) {
 		.get(events.list)
 		.post(users.requiresLogin, events.create);
 
+    app.route('/upload')
+        .post(users.requiresLogin, events.upload_post);
+
+
 	app.route('/events/:eventId')
 		.get(events.read)
 		.put(users.requiresLogin, events.hasAuthorization, events.update)
