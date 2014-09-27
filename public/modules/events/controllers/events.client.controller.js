@@ -22,6 +22,7 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
             }
 
             $scope.image_upload = image;
+            console.log($scope.image_upload);
 
 
         };
@@ -29,19 +30,6 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
         // Create new Event
         $scope.create = function () {
 
-            $scope.upload = $upload.upload({
-                url: '/upload',
-                method: 'POST',
-                data: {
-                    url: $scope.url
-                },
-                file: $scope.image_upload
-            }).success(function (data, status, headers, config) {
-                console.success('Photo uploaded!');
-            }).error(function (err) {
-                $scope.uploadInProgress = false;
-                console.error('Error uploading file: ' + err.message || err);
-            });
 
             // Create new Event object
             var event = new Events({
@@ -58,8 +46,34 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
             });
 
 
-            // Redirect after save
+            // After save
             event.$save(function (response) {
+                if(angular.isDefined($scope.image_upload)) {
+                    console.log(response);
+                    //Define new name for the image
+                    var name = $scope.image_upload.name.replace(/\..+$/, '');
+                    name = $scope.image_upload.name.replace(name, response.url);
+                    console.log($scope.image_upload);
+                    console.log(name);
+
+                    //Upload image
+                    $scope.upload = $upload.upload({
+                        url: '/upload',
+                        method: 'POST',
+                        file: $scope.image_upload,
+                        fileName: name
+                    }).success(function (data, status, headers, config) {
+                        console.log('Photo uploaded!');
+                    }).error(function (err) {
+                        $scope.uploadInProgress = false;
+                        console.error('Error uploading file: ' + err.message || err);
+                    });
+                }
+                else {
+                    console.log('No file found');
+                }
+
+                //Redirect
                 $location.path('events/' + response.url);
             }, function (errorResponse) {
                 $scope.error = errorResponse.data.message;

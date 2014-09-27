@@ -6,6 +6,7 @@
 var mongoose = require('mongoose'),
     Event = mongoose.model('Event'),
     _ = require('lodash');
+var fs = require('fs');
 
 /**
  * Get the error message from error object
@@ -64,11 +65,15 @@ var options = {
 };
 var uploader = require('blueimp-file-upload-expressjs')(options);
 
-exports.upload_post = function (req, res) {
+exports.upload = function (req, res) {
     console.log('upload ...');
+    console.log(req.file);
 
     uploader.post(req, res, function (obj) {
+        console.log(obj);
         res.send(JSON.stringify(obj));
+
+        //fs.rename(options.uploadDir+'/'+obj.files[0].name, options.uploadDir+'/'+obj.files[0].url_name);
     });
 
     return;
