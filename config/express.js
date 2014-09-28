@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 var express = require('express'),
+    qt = require('quickthumb'),
 	morgan = require('morgan'),
 	bodyParser = require('body-parser'),
 	session = require('express-session'),
@@ -23,6 +24,9 @@ var express = require('express'),
 module.exports = function(db) {
 	// Initialize express app
 	var app = express();
+
+    //Quick Thumb
+    app.use('/uploaded/files', qt.static(__dirname + '/../public/uploaded/files'));
 
 	// Globbing model files
 	config.getGlobbedFiles('./app/models/**/*.js').forEach(function(modelPath) {
