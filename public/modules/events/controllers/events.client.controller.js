@@ -32,6 +32,29 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
 
 
             // Create new Event object
+            if(angular.isDefined($scope.image_upload)) {
+                //Define new name for the image
+                var name = $scope.image_upload.name.replace(/\..+$/, '');
+                name = $scope.image_upload.name.replace(name, this.url);
+                console.log($scope.image_upload);
+                console.log(name);
+
+                //Upload image
+                $scope.upload = $upload.upload({
+                    url: '/upload',
+                    method: 'POST',
+                    file: $scope.image_upload,
+                    fileName: name
+                }).success(function (data, status, headers, config) {
+                    console.log('Photo uploaded!');
+                }).error(function (err) {
+                    $scope.uploadInProgress = false;
+                    console.error('Error uploading file: ' + err.message || err);
+                });
+                }
+                else {
+                    console.log('No file found');
+                }
             var event = new Events({
                 title: this.title,
                 url: this.url,
@@ -42,45 +65,19 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
                 location_name: this.location_name,
                 location_latitude: $scope.markers.marker ? $scope.markers.marker.lat : null,
                 location_longitude: $scope.markers.marker ? $scope.markers.marker.lng : null,
-                pass: this.pass
+                pass: this.pass,
+                image: name
             });
 
 
             // After save
             event.$save(function (response) {
-                if(angular.isDefined($scope.image_upload)) {
-                    console.log(response);
-                    //Define new name for the image
-                    var name = $scope.image_upload.name.replace(/\..+$/, '');
-                    name = $scope.image_upload.name.replace(name, response.url);
-                    console.log($scope.image_upload);
-                    console.log(name);
-
-                    //Upload image
-                    $scope.upload = $upload.upload({
-                        url: '/upload',
-                        method: 'POST',
-                        file: $scope.image_upload,
-                        fileName: name
-                    }).success(function (data, status, headers, config) {
-                        console.log('Photo uploaded!');
-                    }).error(function (err) {
-                        $scope.uploadInProgress = false;
-                        console.error('Error uploading file: ' + err.message || err);
-                    });
-                }
-                else {
-                    console.log('No file found');
-                }
-
                 //Redirect
                 $location.path('events/' + response.url);
             }, function (errorResponse) {
                 $scope.error = errorResponse.data.message;
             });
 
-            // Clear form fields
-            this.name = '';
         };
 
         // Remove existing Event
