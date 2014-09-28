@@ -2,6 +2,14 @@
 	<div class="page-header">
 		<h1 ng-bind="event.title"></h1>
 	</div>
+	<div class="page-body">
+		<img src="uploaded/files/{{event.image}}?dim=1100x400" />
+        <h2>From : <span ng-bind="event.start_datetime | date:'longDate'"></span></h2>
+        <h2>To : <span ng-bind="event.end_datetime | date:'longDate'"></span></h2>
+        <h2>Time : <span ng-bind="event.time_description"></span></h2>
+        <h2>Description :</h2>
+        <div ng-bind-html="event.description"></div>
+	</div>
 	<small>
 		<em class="text-muted">
 			Posted on

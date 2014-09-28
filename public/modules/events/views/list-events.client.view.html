@@ -1,18 +1,28 @@
 <section data-ng-controller="EventsController" data-ng-init="find()">
     <div class="page-header">
         <h1>Events</h1>
+        <input type="text" ng-model="search" placeholder="Search events" class="form-control big-input"/>
     </div>
-    <div class="list-group">
-        <a data-ng-repeat="event in events" data-ng-href="#!/events/{{event.url}}" class="list-group-item">
-			<h3 ng-bind="event.title"></h3>
-			<small class="list-group-item-text">
-				Posted on
-				<span data-ng-bind="event.created | date:'medium'"></span>
-				by
-				<span data-ng-bind="event.user.displayName"></span>
-			</small>
-			<h4 class="list-group-item-heading" data-ng-bind="event.name"></h4>
+    <div class="list-group row">
+        <a data-ng-repeat="event in events | filter:search" data-ng-href="#!/events/{{event.url}}" class="list-group-item col-md-4">
+            <div class="row-picture">
+                <img src="uploaded/files/{{event.image}}?dim=100x100">
+            </div>
+            <div class="row-content">
+                <div class="least-content"><span ng-bind="day_difference(event.start_datetime)"></span></div>
+                <h3 ng-bind="event.title"></h3>
+                <small class="list-group-item-text">
+                    From
+                    <span data-ng-bind="event.start_datetime | date:'longDate'"></span>
+                    To
+                    <span data-ng-bind="event.end_datetime | date:'longDate'"></span>
+                     -
+                    <span data-ng-bind="event.time_description"></span>
+                </small>
+                <h4 class="list-group-item-heading" data-ng-bind="event.name"></h4>
+            </div>
         </a>
+
     </div>
     <div class="alert alert-warning text-center" data-ng-hide="!events.$resolved || events.length">
     	No Events yet, why don't you <a href="/#!/events/create">create one</a>?

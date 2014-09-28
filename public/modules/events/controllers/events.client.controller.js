@@ -27,6 +27,25 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
 
         };
 
+        $scope.today = new Date();
+        $scope.today = +$scope.today;
+
+        $scope.day_difference = function (date) {
+            var date_ms = new Date(date);
+            date_ms = +date_ms;
+            var difference = parseInt((date_ms - $scope.today)/86400000+1);
+            if(difference == 0) {
+                difference = "Today";
+            }
+            else if(difference == 1) {
+                difference = "Tomorrow";
+            }
+            else {
+                difference = "In "+difference+" days";
+            }
+            return difference;
+        }
+
         // Create new Event
         $scope.create = function () {
 
@@ -34,17 +53,15 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
             // Create new Event object
             if(angular.isDefined($scope.image_upload)) {
                 //Define new name for the image
-                var name = $scope.image_upload.name.replace(/\..+$/, '');
-                name = $scope.image_upload.name.replace(name, this.url);
-                console.log($scope.image_upload);
-                console.log(name);
+                $scope.name = $scope.image_upload.name.replace(/\..+$/, '');
+                $scope.name = $scope.image_upload.name.replace(name, this.url);
 
                 //Upload image
                 $scope.upload = $upload.upload({
                     url: '/upload',
                     method: 'POST',
                     file: $scope.image_upload,
-                    fileName: name
+                    fileName: $scope.name
                 }).success(function (data, status, headers, config) {
                     console.log('Photo uploaded!');
                 }).error(function (err) {
@@ -66,7 +83,7 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
                 location_latitude: $scope.markers.marker ? $scope.markers.marker.lat : null,
                 location_longitude: $scope.markers.marker ? $scope.markers.marker.lng : null,
                 pass: this.pass,
-                image: name
+                image: $scope.name
             });
 
 
@@ -100,7 +117,8 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
         // Update existing Event
         $scope.update = function () {
             var event = $scope.event;
-
+            console.log('console');
+            console.log($scope.event);
             event.$update(function () {
                 $location.path('events/' + event._id);
             }, function (errorResponse) {
