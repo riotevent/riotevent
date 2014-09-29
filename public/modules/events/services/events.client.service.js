@@ -12,3 +12,9 @@ angular.module('events').factory('Events', ['$resource',
 		});
 	}
 ]);
+
+angular.module('events').factory('EventCreate', ['$resource',
+	function($resource) {
+		return $resource('events/');
+	}
+]);

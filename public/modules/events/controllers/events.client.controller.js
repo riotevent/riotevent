@@ -1,8 +1,8 @@
 'use strict';
 
 // Events controller
-angular.module('events').controller('EventsController', ['$scope', '$stateParams', '$location', '$http', 'Authentication', 'Events', '$upload',
- function ($scope, $stateParams, $location, $http, Authentication, Events, $upload) {
+angular.module('events').controller('EventsController', ['$scope', '$stateParams', '$location', '$http', 'Authentication', 'Events', 'EventCreate', '$upload',
+ function ($scope, $stateParams, $location, $http, Authentication, Events, EventCreate, $upload) {
         $scope.authentication = Authentication;
 
         //SELECT TAGS CATEGORY
@@ -74,20 +74,20 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
                 else {
                     console.log('No file found');
                 }
-            var event = new Events({
-                title: this.event.title,
-                url: this.event.url,
-                start_datetime: this.event.start_datetime,
-                end_datetime: this.event.end_datetime,
-                time_description: this.event.time_description,
-                description: this.event.description,
-                location_name: this.event.location_name,
-                location_latitude: $scope.markers.marker ? $scope.markers.marker.lat : null,
-                location_longitude: $scope.markers.marker ? $scope.markers.marker.lng : null,
-                comment_cats: this.event.comment_cats,
-                pass: this.event.pass,
-                image: $scope.name
-            });
+                var event = new EventCreate({
+                    title: this.event.title,
+                    url: this.event.url,
+                    start_datetime: this.event.start_datetime,
+                    end_datetime: this.event.end_datetime,
+                    time_description: this.event.time_description,
+                    description: this.event.description,
+                    location_name: this.event.location_name,
+                    location_latitude: $scope.markers.marker ? $scope.markers.marker.lat : null,
+                    location_longitude: $scope.markers.marker ? $scope.markers.marker.lng : null,
+                    comment_cats: this.event.comment_cats,
+                    pass: this.event.pass,
+                    image: $scope.name
+                });
 
 
             // After save
