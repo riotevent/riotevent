@@ -5,12 +5,12 @@
 		From
 		</button>
 	</span>
-		<input id="startingDate" type="text" class="form-control big-input" datepicker-popup="{{format}}" ng-model="start_datetime" is-open="start_opened" close-text="Close" placeholder="Enter starting date" ng-click="open_start($event)" />
+		<input id="startingDate" type="text" class="form-control big-input" datepicker-popup="{{format}}" data-ng-model="event.start_datetime" is-open="start_opened" close-text="Close" placeholder="Enter starting date" ng-click="open_start($event)" />
 		<span class="input-group-btn">
 		<button type="button" class="btn btn-default big-input btn-fake" ng-click="open($event)">
 		To
 		</button>
 	</span>
-		<input id="endingDate" type="text" class="form-control big-input" datepicker-popup="{{format}}" ng-model="end_datetime" is-open="end_opened" close-text="Close" placeholder="Enter ending date" ng-click="open_end($event)" />
+		<input id="endingDate" type="text" class="form-control big-input" datepicker-popup="{{format}}" data-ng-model="event.end_datetime" is-open="end_opened" close-text="Close" placeholder="Enter ending date" ng-click="open_end($event)" />
 	</p>
 </div>

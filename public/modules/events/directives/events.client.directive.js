@@ -41,11 +41,11 @@ angular.module('events').directive('eventTitleUrl', function ($filter, $location
             $scope.lock_input = true;
             $scope.title = '';
             $scope.fill_address = function () {
-                if (angular.isUndefined($scope.title)) {
+                if (angular.isUndefined($scope.event.title)) {
                     $scope.title = '';
                 }
                 if ($scope.lock_input === true) {
-                    $scope.url = $filter('lowercase')($scope.title.replace(/ /g, ''));
+                    $scope.event.url = $filter('lowercase')($scope.event.title.replace(/ /g, ''));
                 }
             };
             $scope.event_path = $location.$$host + '/events/';
@@ -108,9 +108,10 @@ angular.module('events').directive('mapForm', function ($http) {
                 };
 
 
+
                 $scope.searchaddress = function () {
                     $http
-                        .get('http://nominatim.openstreetmap.org/search?q=' + $scope.location_name.replace(/ /g, '+') + '&format=json&limit=1&email=' + app_email)
+                        .get('http://nominatim.openstreetmap.org/search?q=' + $scope.event.location_name.replace(/ /g, '+') + '&format=json&limit=1&email=' + app_email)
                         .success(function (data) {
                             if (data[0] && parseFloat(data[0].importance) > 0.5) {
 

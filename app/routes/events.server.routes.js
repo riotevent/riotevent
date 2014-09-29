@@ -12,11 +12,11 @@ module.exports = function(app) {
     app.route('/upload')
         .post(users.requiresLogin, events.upload);
 
-	app.route('/events/:eventId')
+	app.route('/events/:url')
 		.get(events.read)
 		.put(users.requiresLogin, events.hasAuthorization, events.update)
 		.delete(users.requiresLogin, events.hasAuthorization, events.delete);
 
 	// Finish by binding the Event middleware
-	app.param('eventId', events.eventByURL);
+	app.param('url', events.eventByURL);
 };

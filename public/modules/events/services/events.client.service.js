@@ -4,6 +4,8 @@
 angular.module('events').factory('Events', ['$resource',
 	function($resource) {
 		return $resource('events/:url', {
+            url: '@url'
+        }, {
 			update: {
 				method: 'PUT'
 			}

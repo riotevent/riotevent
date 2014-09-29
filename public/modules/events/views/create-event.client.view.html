@@ -12,7 +12,7 @@
 
 					<div class="form-group" ng-show="true">
 						<div class="controls">
-							<input type="text" data-ng-model="time_description" id="time" class="form-control big-input" placeholder="Enter time of the event (ex : from 4pm. to midnight)" required>
+							<input type="text" data-ng-model="event.time_description" id="time" class="form-control big-input" placeholder="Enter time of the event (ex : from 4pm. to midnight)" required>
 						</div>
 					</div>
 
@@ -36,19 +36,19 @@
 					<h2><i class="fa fa-paragraph"></i> Description</h2>
 					<div class="form-group">
 						<div class="controls">
-							<div text-angular ng-model="description" ta-toolbar="[['h1','h2','h3', 'h4', 'p'],['bold','italics', 'ul', 'ol', 'undo', 'redo']]"></div>
+							<div text-angular data-ng-model="event.description" ta-toolbar="[['h1','h2','h3', 'h4', 'p'],['bold','italics', 'ul', 'ol', 'undo', 'redo']]"></div>
 						</div>
 					</div>
 
-					<h2><i class="fa fa-comments "></i> Discussion Categories</h2>
+                    <h2><i class="fa fa-comments "></i> Discussion Categorie</h2>
 					<div class="form-group">
-						<input class="big-input" type="hidden" ui-select2="select2Options" ng-model="comment_cat">
+						<input class="big-input" type="hidden" ui-select2="select2Options" data-ng-model="event.comment_cats">
 						<p class="help-block">You can select here the comments categories.</p>
 					</div>
 
 					<h2><i class="fa fa-lock "></i> Lock Event ? </h2>
 					<div class="form-group">
-						<input type="text" data-ng-model="pass" id="pass" class="form-control big-input" placeholder="Enter a password if you want to protect your event, only people who know it will have acces to it.">
+						<input type="text" data-ng-model="event.pass" id="pass" class="form-control big-input" placeholder="Enter a password if you want to protect your event, only people who know it will have acces to it.">
 						<p class="help-block">Fill this only if you want to create a private event.</p>
 					</div>
 

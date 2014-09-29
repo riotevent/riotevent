@@ -6,7 +6,9 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
         $scope.authentication = Authentication;
 
         //SELECT TAGS CATEGORY
-        $scope.comment_cat = ['General discussion'];
+        $scope.event = {};
+        $scope.event.comment_cats = ['General discussion'];
+
         $scope.select2Options = {
             'multiple': true,
             'simple_tags': true,
@@ -54,7 +56,7 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
             if(angular.isDefined($scope.image_upload)) {
                 //Define new name for the image
                 $scope.name = $scope.image_upload.name.replace(/\..+$/, '');
-                $scope.name = $scope.image_upload.name.replace(name, this.url);
+                $scope.name = $scope.image_upload.name.replace(name, this.event.url);
 
                 //Upload image
                 $scope.upload = $upload.upload({
@@ -73,16 +75,17 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
                     console.log('No file found');
                 }
             var event = new Events({
-                title: this.title,
-                url: this.url,
-                start_datetime: this.start_datetime,
-                end_datetime: this.end_datetime,
-                time_description: this.time_description,
-                description: this.description,
-                location_name: this.location_name,
+                title: this.event.title,
+                url: this.event.url,
+                start_datetime: this.event.start_datetime,
+                end_datetime: this.event.end_datetime,
+                time_description: this.event.time_description,
+                description: this.event.description,
+                location_name: this.event.location_name,
                 location_latitude: $scope.markers.marker ? $scope.markers.marker.lat : null,
                 location_longitude: $scope.markers.marker ? $scope.markers.marker.lng : null,
-                pass: this.pass,
+                comment_cats: this.event.comment_cats,
+                pass: this.event.pass,
                 image: $scope.name
             });
 
@@ -117,10 +120,8 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
         // Update existing Event
         $scope.update = function () {
             var event = $scope.event;
-            console.log('console');
-            console.log($scope.event);
             event.$update(function () {
-                $location.path('events/' + event._id);
+                $location.path('events/' + event.url);
             }, function (errorResponse) {
                 $scope.error = errorResponse.data.message;
             });

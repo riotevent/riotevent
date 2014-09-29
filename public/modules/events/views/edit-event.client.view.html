@@ -1,23 +1,69 @@
-<section data-ng-controller="EventsController" data-ng-init="findOne()">
-    <div class="page-header">
-        <h1>Edit Event</h1>
-    </div>
-    <div class="col-md-12">
-        <form class="form-horizontal" data-ng-submit="update()" novalidate>
-            <fieldset>
-                <div class="form-group">
-                    <label class="control-label" for="title">Title</label>
-                    <div class="controls">
-                        <input type="text" data-ng-model="event.title" id="name" class="form-control" placeholder="Title" required>
+<section class="section-create-event" data-ng-controller="EventsController" data-ng-init="findOne()">
+	<div class="page-header">
+		<h1>Edit Event</h1>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<form class="form-horizontal form-event-creation" data-ng-submit="update()" novalidate>
+				<fieldset>
+					<h2><i class="fa fa-tags"></i> General Info</h2>
+                    <div class="form-group">
+                        <div class="controls">
+                            <input type="text" data-ng-model="event.title" id="title" name="title" class="form-control big-input" placeholder="Enter the title of your event" required>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Update" class="btn btn-default">
-                </div>
-				<div data-ng-show="error" class="text-danger">
-					<strong data-ng-bind="error"></strong>
-				</div>
-            </fieldset>
-        </form>
-    </div>
+					<event-datepicker></event-datepicker>
+
+					<div class="form-group" ng-show="true">
+						<div class="controls">
+							<input type="text" data-ng-model="event.time_description" id="time" class="form-control big-input" placeholder="Enter time of the event (ex : from 4pm. to midnight)" required>
+						</div>
+					</div>
+
+
+						<div class="controls">
+
+						</div>
+
+
+					<div class="form-group">
+						<p class="input-group">
+							<span class="input-group-btn">
+								<button type="button" class="btn btn-default big-input btn-fake">
+									Add a picture for the event
+								</button>
+							</span>
+							<input type="file" ng-file-select="onFileSelect($files)" id="image" class="form-control big-input" placeholder="Add a picture for the event" required>
+						</p>
+					</div>
+
+					<h2><i class="fa fa-paragraph"></i> Description</h2>
+					<div class="form-group">
+						<div class="controls">
+							<div text-angular data-ng-model="event.description" ta-toolbar="[['h1','h2','h3', 'h4', 'p'],['bold','italics', 'ul', 'ol', 'undo', 'redo']]"></div>
+						</div>
+					</div>
+
+                    <h2><i class="fa fa-comments "></i> Discussion Categorie</h2>
+					<div class="form-group">
+						<input class="big-input" type="hidden" ui-select2="select2Options" data-ng-model="event.comment_cats">
+						<p class="help-block">You can select here the comments categories.</p>
+					</div>
+
+					<h2><i class="fa fa-globe"></i> Location</h2>
+					<map-form></map-form>
+
+					<input type="submit" onclick="return false;" class="hidden">
+					<div class="form-group">
+						<button class="btn btn-default btn-submit">Submit</button>
+					</div>
+
+					<div data-ng-show="error" class="text-danger">
+						<strong data-ng-bind="error"></strong>
+					</div>
+
+				</fieldset>
+			</form>
+		</div>
+	</div>
 </section>
