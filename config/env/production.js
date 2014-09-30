@@ -12,7 +12,7 @@ module.exports = {
 				'public/lib/select2/select2.css'
 			],
 			js: [
-				'public/lib/jquery/jquery.min.js',
+				'public/lib/jquery/dist/jquery.min.js',
 				'public/lib/angular/angular.min.js',
 				'public/lib/angular-resource/angular-resource.js',
 				'public/lib/angular-cookies/angular-cookies.js',
