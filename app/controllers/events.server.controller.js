@@ -39,8 +39,6 @@ exports.create = function (req, res) {
     var event = new Event(req.body);
     event.user = req.user;
 
-    console.log(event);
-
     event.save(function (err) {
         if (err) {
             return res.send(400, {
@@ -59,6 +57,8 @@ var options = {
     tmpDir:  __dirname + '/../../public/uploaded/tmp',
     uploadDir: __dirname + '/../..//public/uploaded/files',
     uploadUrl: '/uploaded/files/',
+    minFileSize:  1,
+    maxFileSize:  10000000, //10MB
     storage: {
         type: 'local'
     }
@@ -66,17 +66,12 @@ var options = {
 var uploader = require('blueimp-file-upload-expressjs')(options);
 
 exports.upload = function (req, res) {
-    console.log('upload ...');
-    console.log(req.file);
+    console.log('Uploading image ...');
 
     uploader.post(req, res, function (obj) {
         console.log(obj);
         res.send(JSON.stringify(obj));
-
-        //fs.rename(options.uploadDir+'/'+obj.files[0].name, options.uploadDir+'/'+obj.files[0].url_name);
     });
-
-    return;
 };
 
 /**

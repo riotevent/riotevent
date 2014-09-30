@@ -36,67 +36,75 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
             var date_ms = new Date(date);
             date_ms = +date_ms;
             var difference = parseInt((date_ms - $scope.today)/86400000+1);
-            if(difference == 0) {
-                difference = "Today";
+            if(difference === 0) {
+                difference = 'Today';
             }
-            else if(difference == 1) {
-                difference = "Tomorrow";
+            else if(difference === 1) {
+                difference = 'Tomorrow';
             }
             else {
-                difference = "In "+difference+" days";
+                difference = 'In ' + difference + ' days';
             }
             return difference;
-        }
+        };
 
         // Create new Event
         $scope.create = function () {
+            var eventCreation = function() {
+                var event = new EventCreate({
+                    title: $scope.event.title,
+                    url: $scope.event.url,
+                    start_datetime: $scope.event.start_datetime,
+                    end_datetime: $scope.event.end_datetime,
+                    time_description: $scope.event.time_description,
+                    description: $scope.event.description,
+                    location_name: $scope.event.location_name,
+                    location_latitude: $scope.markers.marker ? $scope.markers.marker.lat : null,
+                    location_longitude: $scope.markers.marker ? $scope.markers.marker.lng : null,
+                    comment_cats: $scope.event.comment_cats,
+                    pass: $scope.event.pass,
+                    image: $scope.event.image
+                });
+                // After save
+                event.$save(function (response) {
+                    //Redirect
+                    $location.path('events/' + response.url);
+                }, function (errorResponse) {
+                    $scope.error = errorResponse.data.message;
+                });
+            }
+
 
 
             // Create new Event object
             if(angular.isDefined($scope.image_upload)) {
                 //Define new name for the image
-                $scope.name = $scope.image_upload.name.replace(/\..+$/, '');
-                $scope.name = $scope.image_upload.name.replace(name, this.event.url);
+                $scope.event.image = $scope.image_upload.name.replace(/\..+$/, '');
+                $scope.event.image = $scope.image_upload.name.replace($scope.event.image, $scope.event.url);
 
                 //Upload image
                 $scope.upload = $upload.upload({
                     url: '/upload',
                     method: 'POST',
                     file: $scope.image_upload,
-                    fileName: $scope.name
+                    fileName: $scope.event.image
                 }).success(function (data, status, headers, config) {
                     console.log('Photo uploaded!');
+                    $scope.event.image = data.files[0].name;
+                    eventCreation();
                 }).error(function (err) {
                     $scope.uploadInProgress = false;
                     console.error('Error uploading file: ' + err.message || err);
                 });
-                }
-                else {
-                    console.log('No file found');
-                }
-                var event = new EventCreate({
-                    title: this.event.title,
-                    url: this.event.url,
-                    start_datetime: this.event.start_datetime,
-                    end_datetime: this.event.end_datetime,
-                    time_description: this.event.time_description,
-                    description: this.event.description,
-                    location_name: this.event.location_name,
-                    location_latitude: $scope.markers.marker ? $scope.markers.marker.lat : null,
-                    location_longitude: $scope.markers.marker ? $scope.markers.marker.lng : null,
-                    comment_cats: this.event.comment_cats,
-                    pass: this.event.pass,
-                    image: $scope.name
-                });
+            }
+            else {
+                console.log('No file found');
+                eventCreation();
+            }
 
 
-            // After save
-            event.$save(function (response) {
-                //Redirect
-                $location.path('events/' + response.url);
-            }, function (errorResponse) {
-                $scope.error = errorResponse.data.message;
-            });
+
+
 
         };
 
@@ -119,12 +127,45 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
 
         // Update existing Event
         $scope.update = function () {
+            var updateEvent = function () {
+                event.$update(function () {
+                    $location.path('events/' + event.url);
+                }, function (errorResponse) {
+                    $scope.error = errorResponse.data.message;
+                });
+            }
+
+
             var event = $scope.event;
-            event.$update(function () {
-                $location.path('events/' + event.url);
-            }, function (errorResponse) {
-                $scope.error = errorResponse.data.message;
-            });
+            if(angular.isDefined($scope.image_upload)) {
+                //Define new name for the image
+                $scope.event.image = $scope.image_upload.name.replace(/\..+$/, '');
+                $scope.event.image = $scope.image_upload.name.replace($scope.event.image, $scope.event.url);
+
+                //Upload image
+                $scope.upload = $upload.upload({
+                    url: '/upload',
+                    method: 'POST',
+                    file: $scope.image_upload,
+                    fileName: $scope.event.image
+                }).success(function (data, status, headers, config) {
+                    console.log('Image uploaded!');
+                    console.log(data.files[0].name);
+
+                    $scope.event.image = data.files[0].name;
+
+                    updateEvent();
+
+                }).error(function (err) {
+                    $scope.uploadInProgress = false;
+                    console.error('Error uploading file: ' + err.message || err);
+                });
+            }
+            else {
+                console.log('No file found');
+                updateEvent();
+            }
+
         };
 
         // Find a list of Events
@@ -137,6 +178,7 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
             $scope.event = Events.get({
                 url: $stateParams.url
             });
+            console.log($scope.event);
         };
  }
 ]);
