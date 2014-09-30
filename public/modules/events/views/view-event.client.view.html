@@ -19,7 +19,7 @@
         </div></h1>
 	</div>
     <div class="page-body">
-		<img ng-if="angular.isDefined(event.image)" src="uploaded/files/{{event.image}}?dim=1140x400" />
+		<img src="uploaded/files/{{event.image}}?dim=1140x400" ng-show="event.image" />
         <h2 ng-if="event.start_datetime != null">From : <span ng-bind="event.start_datetime | date:'longDate'"></span></h2>
         <h2 ng-if="event.end_datetime != null">To : <span ng-bind="event.end_datetime | date:'longDate'"></span></h2>
         <h2 ng-if="event.time_description != ''">Time : <span ng-bind="event.time_description"></span></h2>
