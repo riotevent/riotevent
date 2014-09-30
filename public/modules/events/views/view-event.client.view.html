@@ -25,6 +25,8 @@
         <h2>Time : <span ng-bind="event.time_description"></span></h2>
         <h2>Description :</h2>
         <div ng-bind-html="event.description"></div>
+        <h2>Location : <span ng-bind="event.location_name"></span></h2>
+        <map-event-view></map-event-view>
 	</div>
 	<small>
 		<em class="text-muted">

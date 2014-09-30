@@ -36,12 +36,15 @@ var EventSchema = new Schema({
 		default: '',
 		trim: true
 	},
-	location_latittude: {
+	location_latitude: {
 		type: Number
 	},
 	location_longitude: {
 		type: Number
 	},
+    map_bounding_box: {
+        type: Array
+    },
 	start_datetime: {
 		type: Date,
 		default: '',

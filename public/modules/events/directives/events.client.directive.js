@@ -108,7 +108,6 @@ angular.module('events').directive('mapForm', function ($http) {
                 };
 
 
-
                 $scope.searchaddress = function () {
                     $http
                         .get('http://nominatim.openstreetmap.org/search?q=' + $scope.event.location_name.replace(/ /g, '+') + '&format=json&limit=1&email=' + app_email)
@@ -132,6 +131,56 @@ angular.module('events').directive('mapForm', function ($http) {
                             }
                         });
                 };
+            }
+        }
+    };
+});
+
+angular.module('events').directive('mapEventView', function ($http) {
+    return {
+        restrict: 'E',
+        templateUrl: 'modules/events/views/map-view-event-directive.view.html',
+        link: {
+            pre: function ($scope, element, attributes) {
+
+                angular.extend($scope, {
+                    bounds: {
+                        southWest: {
+                            lat: -35,
+                            lng: -35
+                        },
+                        northEast: {
+                            lat: 35,
+                            lng: 35
+                        }
+                    },
+                    markers: {},
+                    hostmap: {},
+                    layers: {
+                        baselayers: {
+                            quest: {
+                                name: 'OpenMapQuest',
+                                type: 'xyz',
+                                url: 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',
+                                layerOptions: {
+                                    subdomains: ['1', '2', '3', '4'],
+                                    attribution: 'contributors - &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                                    continuousWorld: true
+                                }
+                            },
+                            osm: {
+                                name: 'OpenStreetMap',
+                                type: 'xyz',
+                                url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                layerOptions: {
+                                    subdomains: ['a', 'b', 'c'],
+                                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                                    continuousWorld: true
+                                }
+                            }
+                        }
+                    }
+                });
             }
         }
     };

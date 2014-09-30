@@ -51,6 +51,12 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
         // Create new Event
         $scope.create = function () {
             var eventCreation = function() {
+                $scope.event.map_bounding_box = [];
+                $scope.event.map_bounding_box[0] = $scope.bounds.southWest.lat;
+                $scope.event.map_bounding_box[1] = $scope.bounds.northEast.lat;
+                $scope.event.map_bounding_box[2] = $scope.bounds.southWest.lng;
+                $scope.event.map_bounding_box[3] = $scope.bounds.northEast.lng;
+                console.log($scope.event.map_bounding_box);
                 var event = new EventCreate({
                     title: $scope.event.title,
                     url: $scope.event.url,
@@ -61,6 +67,7 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
                     location_name: $scope.event.location_name,
                     location_latitude: $scope.markers.marker ? $scope.markers.marker.lat : null,
                     location_longitude: $scope.markers.marker ? $scope.markers.marker.lng : null,
+                    map_bounding_box: $scope.event.map_bounding_box,
                     comment_cats: $scope.event.comment_cats,
                     pass: $scope.event.pass,
                     image: $scope.event.image
@@ -73,8 +80,6 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
                     $scope.error = errorResponse.data.message;
                 });
             }
-
-
 
             // Create new Event object
             if(angular.isDefined($scope.image_upload)) {
@@ -101,11 +106,6 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
                 console.log('No file found');
                 eventCreation();
             }
-
-
-
-
-
         };
 
         // Remove existing Event
@@ -128,6 +128,13 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
         // Update existing Event
         $scope.update = function () {
             var updateEvent = function () {
+
+                $scope.event.location_latitude = $scope.markers.marker.lat;
+                $scope.event.location_longitude = $scope.markers.marker.lng;
+                $scope.event.map_bounding_box[0] = $scope.bounds.southWest.lat;
+                $scope.event.map_bounding_box[1] = $scope.bounds.northEast.lat;
+                $scope.event.map_bounding_box[2] = $scope.bounds.southWest.lng;
+                $scope.event.map_bounding_box[3] = $scope.bounds.northEast.lng;
                 event.$update(function () {
                     $location.path('events/' + event.url);
                 }, function (errorResponse) {
@@ -177,8 +184,19 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
         $scope.findOne = function () {
             $scope.event = Events.get({
                 url: $stateParams.url
+            }, function() {
+                $scope.markers.marker = {};
+                $scope.markers.marker.lat = $scope.event.location_latitude;
+                $scope.markers.marker.lng = $scope.event.location_longitude;
+                $scope.markers.marker.focus = true;
+                if($location.path().replace($stateParams.url,'').contains('edit')) {
+                    $scope.markers.marker.draggable = true;
+                }
+                $scope.bounds.southWest.lat = $scope.event.map_bounding_box[0];
+                $scope.bounds.northEast.lat = $scope.event.map_bounding_box[1];
+                $scope.bounds.southWest.lng = $scope.event.map_bounding_box[2];
+                $scope.bounds.northEast.lng = $scope.event.map_bounding_box[3];
             });
-            console.log($scope.event);
         };
  }
 ]);
