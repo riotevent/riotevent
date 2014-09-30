@@ -33,19 +33,28 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
         $scope.today = +$scope.today;
 
         $scope.day_difference = function (date) {
-            var date_ms = new Date(date);
-            date_ms = +date_ms;
-            var difference = parseInt((date_ms - $scope.today)/86400000+1);
-            if(difference === 0) {
-                difference = 'Today';
-            }
-            else if(difference === 1) {
-                difference = 'Tomorrow';
+            console.log(date);
+            if(date != null) {
+                var date_ms = new Date(date);
+                date_ms = +date_ms;
+                $scope.difference = parseInt((date_ms - $scope.today)/86400000+1);
+                if($scope.difference === 0) {
+                    $scope.difference = 'Today';
+                }
+                else if($scope.difference === 1) {
+                    $scope.difference = 'Tomorrow';
+                }
+                else if($scope.difference < 0) {
+                    $scope.difference = Math.abs($scope.difference) + ' days ago';
+                }
+                else {
+                    $scope.difference = 'In ' + $scope.difference + ' days';
+                }
             }
             else {
-                difference = 'In ' + difference + ' days';
+                $scope.difference = null;
             }
-            return difference;
+            return $scope.difference;
         };
 
         // Create new Event
@@ -56,7 +65,6 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
                 $scope.event.map_bounding_box[1] = $scope.bounds.northEast.lat;
                 $scope.event.map_bounding_box[2] = $scope.bounds.southWest.lng;
                 $scope.event.map_bounding_box[3] = $scope.bounds.northEast.lng;
-                console.log($scope.event.map_bounding_box);
                 var event = new EventCreate({
                     title: $scope.event.title,
                     url: $scope.event.url,
@@ -187,7 +195,6 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
             $scope.event = Events.get({
                 url: $stateParams.url
             }, function() {
-                console.log($scope.event);
                 if($scope.event.location_latitude != null) {
                     $scope.markers.marker = {};
                     $scope.markers.marker.lat = $scope.event.location_latitude;

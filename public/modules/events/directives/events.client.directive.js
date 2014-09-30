@@ -27,7 +27,9 @@ angular.module('events').directive('eventDatepicker', function () {
                 $scope.end_opened = true;
                 $scope.start_opened = false;
             };
-
+            $scope.dateOptions = {
+                startingDay: 1
+            };
             $scope.format = 'dd/MM/yyyy';
         }
     };
