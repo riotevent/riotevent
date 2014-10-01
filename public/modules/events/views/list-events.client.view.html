@@ -9,13 +9,13 @@
                 <img src="uploaded/files/{{event.image}}?dim=100x100">
             </div>
             <div class="row-content">
-                <div class="least-content"><span ng-bind="day_difference(event.start_datetime)"></span></div>
+                <div class="least-content"><next-days date="event.start_datetime" today="today"></next-days></div>
                 <h3 ng-bind="event.title"></h3>
                 <small class="list-group-item-text">
-                    <span ng-if="event.start_datetime != null">From
+                    <span ng-if="event.start_datetime != null">Starting
                         <span data-ng-bind="event.start_datetime | date:'longDate'"></span>
                     </span>
-                    <span ng-if="event.end_datetime != null">To
+                    <span ng-if="event.end_datetime != null">until
                         <span data-ng-bind="event.end_datetime | date:'longDate'"></span>
                     </span>
                 </small>
@@ -24,7 +24,10 @@
         </a>
 
     </div>
-    <div class="alert alert-warning text-center" data-ng-hide="!events.$resolved || events.length">
+    <div class="alert alert-warning text-center" data-ng-hide="!events.$resolved || events.length || !authentication.user">
     	No Events yet, why don't you <a href="/#!/events/create">create one</a>?
+    </div>
+    <div class="alert alert-warning text-center" data-ng-hide="authentication.user">
+    	You want to create your own event, you can <a href="/#!/signup">sign up</a> and create one.
     </div>
 </section>

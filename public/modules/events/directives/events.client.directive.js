@@ -1,5 +1,72 @@
 'use strict';
 
+angular.module('events').directive('nextDays', function () {
+    return {
+        restrict: 'E',
+        template: '{{nextdate}}',
+        scope: {
+            date: '=date',
+            today: '=today'
+        },
+        link: function ($scope, element, attributes) {
+
+
+            if($scope.date !== null) {
+                var date = new Date($scope.date);
+                date = +date;
+                var difference = (date - $scope.today)/86400000+1;
+                console.log($scope.today);
+                console.log(date);
+                console.log(difference);
+
+
+                if(difference > 0 && difference <= 1) {
+                    $scope.nextdate = 'Today';
+                }
+                else if(difference > 1  && difference <= 2) {
+                    $scope.nextdate = 'Tomorrow';
+                }
+                else if(difference > 2 && difference <= 30){
+                    $scope.nextdate = 'In ' + parseInt(difference) + ' days';
+                }
+                else if(difference > 30 && difference <= 60) {
+                    $scope.nextdate = 'In one month';
+                }
+                else if(difference > 60 && difference <= 365) {
+                    $scope.nextdate = 'In ' + parseInt(difference/30) + ' months';
+                }
+                else if(difference > 365 && difference <= 730) {
+                    $scope.nextdate = 'In one year';
+                }
+                else if(difference > 730) {
+                    $scope.nextdate = 'In ' + parseInt(difference/365) + ' years';
+                }
+                else if(difference > -1 && difference <= 0) {
+                    $scope.nextdate = 'Yesterday';
+                }
+                else if(difference > -30 && difference <= -1) {
+                    $scope.nextdate = Math.abs(parseInt(difference)-1) + ' days ago';
+                }
+                else if(difference > -60 && difference <= -30) {
+                    $scope.nextdate = 'One month ago';
+                }
+                else if(difference > -365 && difference <= -60) {
+                    $scope.nextdate = Math.abs(parseInt((difference-1)/30)) + ' months ago';
+                }
+                else if(difference > -730 && difference <= -365) {
+                    $scope.nextdate = 'One year ago';
+                }
+                else if(difference < -730) {
+                    $scope.nextdate = Math.abs(parseInt((difference-1)/365)) + ' years ago';
+                }
+            }
+            else {
+                difference = null;
+            }
+            return difference;
+        }
+    };
+});
 angular.module('events').directive('eventDatepicker', function () {
     return {
         restrict: 'E',

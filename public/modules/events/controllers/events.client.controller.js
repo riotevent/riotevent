@@ -30,32 +30,7 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
         };
 
         $scope.today = new Date();
-        $scope.today = +$scope.today;
-
-        $scope.day_difference = function (date) {
-            console.log(date);
-            if(date != null) {
-                var date_ms = new Date(date);
-                date_ms = +date_ms;
-                $scope.difference = parseInt((date_ms - $scope.today)/86400000+1);
-                if($scope.difference === 0) {
-                    $scope.difference = 'Today';
-                }
-                else if($scope.difference === 1) {
-                    $scope.difference = 'Tomorrow';
-                }
-                else if($scope.difference < 0) {
-                    $scope.difference = Math.abs($scope.difference) + ' days ago';
-                }
-                else {
-                    $scope.difference = 'In ' + $scope.difference + ' days';
-                }
-            }
-            else {
-                $scope.difference = null;
-            }
-            return $scope.difference;
-        };
+        $scope.today = +$scope.today
 
         // Create new Event
         $scope.create = function () {
@@ -87,7 +62,7 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
                 }, function (errorResponse) {
                     $scope.error = errorResponse.data.message;
                 });
-            }
+            };
 
             // Create new Event object
             if(angular.isDefined($scope.image_upload)) {
@@ -150,7 +125,7 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
                 }, function (errorResponse) {
                     $scope.error = errorResponse.data.message;
                 });
-            }
+            };
 
 
             var event = $scope.event;
@@ -195,7 +170,7 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
             $scope.event = Events.get({
                 url: $stateParams.url
             }, function() {
-                if($scope.event.location_latitude != null) {
+                if($scope.event.location_latitude !== null) {
                     $scope.markers.marker = {};
                     $scope.markers.marker.lat = $scope.event.location_latitude;
                     $scope.markers.marker.lng = $scope.event.location_longitude;
@@ -207,6 +182,19 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
                     $scope.bounds.northEast.lat = $scope.event.map_bounding_box[1];
                     $scope.bounds.southWest.lng = $scope.event.map_bounding_box[2];
                     $scope.bounds.northEast.lng = $scope.event.map_bounding_box[3];
+                }
+                if(!$location.path().replace($stateParams.url,'').contains('edit')) {
+                    $scope.event_info_col = 0;
+                    if($scope.event.time_description){
+                        $scope.event_info_col++;
+                    }
+                    if($scope.event.location_name){
+                        $scope.event_info_col++;
+                    }
+                    if($scope.event.start_datetime || $scope.event.start_datetime){
+                        $scope.event_info_col++;
+                    }
+                    $scope.event_info_col = 12/$scope.event_info_col;
                 }
             });
         };

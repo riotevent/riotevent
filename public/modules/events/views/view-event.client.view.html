@@ -17,23 +17,42 @@
             </a>
 
         </div></h1>
+        <small>
+            <em class="text-muted">
+                Posted on
+                <span data-ng-bind="event.created | date:'mediumDate'"></span>
+                by
+                <span data-ng-bind="event.user.displayName"></span>
+            </em>
+        </small>
 	</div>
     <div class="page-body">
-		<img src="uploaded/files/{{event.image}}?dim=1140x400" ng-show="event.image" />
-        <h2 ng-if="event.start_datetime != null">From : <span ng-bind="event.start_datetime | date:'longDate'"></span></h2>
-        <h2 ng-if="event.end_datetime != null">To : <span ng-bind="event.end_datetime | date:'longDate'"></span></h2>
-        <h2 ng-if="event.time_description != ''">Time : <span ng-bind="event.time_description"></span></h2>
-        <h2 ng-if="event.description != ''">Description :</h2>
-        <div ng-if="event.description != ''" ng-bind-html="event.description"></div>
-        <h2 ng-if="event.location_name != ''" >Location : <span ng-bind="event.location_name"></span></h2>
-        <map-event-view ng-show="event.location_latitude != null"></map-event-view>
+        <div class="row">
+            <div class="col-md-12">
+                <img class="img-thumbnail" src="uploaded/files/{{event.image}}?dim=1140x400" ng-show="event.image" />
+            </div>
+        </div>
+        <div class="row panel row-event-info" ng-if="event_info_col < 12">
+            <div class="col-md-{{event_info_col}} col-event-info" ng-if="event.start_datetime != null || event.end_datetime != null">
+                <i class="fa fa-calendar"></i>
+                <p><span ng-if="event.start_datetime != null">Starting <span ng-bind="event.start_datetime | date:'longDate'"></span></span><span ng-if="event.end_datetime != null"> until <span ng-bind="event.end_datetime | date:'longDate'"></span></span></p>
+            </div>
+            <div class="col-md-{{event_info_col}} col-event-info" ng-if="event.time_description != ''">
+                <i class="fa fa-clock-o"></i>
+                <p ng-bind="event.time_description"></p>
+            </div>
+            <div class="col-md-{{event_info_col}} col-event-info" ng-if="event.location_name != ''">
+                <i class="fa fa-map-marker"></i>
+                <p ng-bind="event.location_name"></p>
+            </div>
+        </div>
+        <div class="row event-description" ng-if="event.description != ''">
+            <div class="col-md-12" ng-bind-html="event.description"></div>
+        </div>
+        <div class="row" ng-show="event.location_latitude != null">
+            <div class="col-md-12">
+                <map-event-view ></map-event-view>
+            </div>
+        </div>
 	</div>
-	<small>
-		<em class="text-muted">
-			Posted on
-			<span data-ng-bind="event.created | date:'mediumDate'"></span>
-			by
-			<span data-ng-bind="event.user.displayName"></span>
-		</em>
-	</small>
 </section>
