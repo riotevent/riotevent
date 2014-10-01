@@ -6,7 +6,8 @@
 var mongoose = require('mongoose'),
     Event = mongoose.model('Event'),
     _ = require('lodash');
-var fs = require('fs');
+var optimage = require('optimage');
+
 
 /**
  * Get the error message from error object
@@ -18,7 +19,7 @@ var getErrorMessage = function (err) {
         switch (err.code) {
         case 11000:
         case 11001:
-            message = 'Event already exists';
+            message = 'Event url already exists';
             break;
         default:
             message = 'Something went wrong';
@@ -55,7 +56,7 @@ exports.create = function (req, res) {
  */
 var options = {
     tmpDir:  __dirname + '/../../public/uploaded/tmp',
-    uploadDir: __dirname + '/../..//public/uploaded/files',
+    uploadDir: __dirname + '/../../public/uploaded/files',
     uploadUrl: '/uploaded/files/',
     minFileSize:  1,
     maxFileSize:  10000000, //10MB
@@ -71,6 +72,14 @@ exports.upload = function (req, res) {
     uploader.post(req, res, function (obj) {
         console.log(obj);
         res.send(JSON.stringify(obj));
+        optimage({
+            inputFile: options.uploadDir + '/' + obj.files[0].name,
+            outputFile: options.uploadDir + '/' + obj.files[0].name
+          }, function(err, res){
+            console.log(res.inputFile);
+            console.log(res.outputFile);
+            console.log(res.saved);
+        });
     });
 };
 
