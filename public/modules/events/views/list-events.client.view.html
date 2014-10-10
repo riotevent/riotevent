@@ -1,7 +1,9 @@
-<section data-ng-controller="EventsController" data-ng-init="find()">
+<section class="container" data-ng-controller="EventsController" data-ng-init="find()">
     <div class="page-header">
         <h1>Events</h1>
+        <div class="form-group">
         <input type="text" ng-model="search" placeholder="Search events" class="form-control big-input"/>
+        </div>
     </div>
     <div class="list-group row">
         <a data-ng-repeat="event in events | filter:search | orderBy:'start_datetime'" data-ng-href="#!/events/{{event.url}}" class="list-group-item col-md-4">

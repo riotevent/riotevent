@@ -1,9 +1,32 @@
+@event-orange :#E5AD40;
 @event-orange-grey :#fae9b8;
+@event-red : #8E110B;
+@event-blue :#007dd8;
+@event-grey :#e0e0e0;
 
-section.content {
-	margin-top: 50px;
-	padding-bottom: 50px;
+@font-face {
+    font-family: 'greatlakes';
+    src: url('../font/grealn__-webfont.eot');
+    src: url('../font/grealn__-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../font/grealn__-webfont.woff2') format('woff2'),
+         url('../font/grealn__-webfont.woff') format('woff'),
+         url('../font/grealn__-webfont.ttf') format('truetype'),
+         url('../font/grealn__-webfont.svg#greatlakesnfregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
+@font-face {
+    font-family: 'railwayregular';
+    src: url('../font/railway-webfont.eot');
+    src: url('../font/railway-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../font/railway-webfont.woff2') format('woff2'),
+         url('../font/railway-webfont.woff') format('woff'),
+         url('../font/railway-webfont.ttf') format('truetype'),
+         url('../font/railway-webfont.svg#railwayregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .undecorated-link:hover {
 	text-decoration: none;
 }
@@ -11,22 +34,123 @@ section.content {
 	display: none !important;
 }
 
-.row-riot-head{
-	margin-top: 20px;
-	.col-riot-head{
-		border: 10px;
-	}
-	.col-riot-head:hover{
-		.jumbotron{
-			background-color: @event-orange-grey;
-			cursor: pointer;
-		}
-	}
+html, body, section{
+    height: 100%;
 }
+body {
 
-a{
-	color: black;
-}
-a:hover{
-	text-decoration: none;
+
+    h1, h2, h3, h4 {
+        font-family: 'railwayregular';
+    }
+    a{
+        color: black;
+    }
+    a:hover{
+        color: @event-red;
+    }
+
+    section{
+        margin-top: 80px;
+    }
+    .navbar{
+        background-color: black;
+        background-image: none;
+        height: 80px;
+        .navbar-brand{
+            line-height: 40px;
+            font-size: 26px;
+        }
+        .navbar-brand:hover{
+            color: @event-orange;
+        }
+
+    }
+    .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+        color: @event-orange;
+        background-color: black;
+    }
+    .navbar-inverse .navbar-nav > .active > a {
+        background-image: none;
+        background-color: black;
+        color: @event-orange;
+    }
+
+    .navbar-collapse{
+        background-color: black;
+    }
+
+    .navbar-header{
+        height: 80px;
+    }
+
+    .event-home{
+
+        margin-top: 0px;
+        padding-bottom: 0px;
+        background-image: url('../img/back/back.jpg');
+        background-position: center;
+        min-height: 100%;
+        width:100%;
+        button{
+            width: 250px;
+            height: 50px;
+            background-color: transparent;
+            border-radius: 1px;
+            border: solid 2px @event-red;
+            color: @event-red;
+            margin: 10px;
+            font-size: 20px;
+            font-family: 'railwayregular';
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        button:hover{
+            background-color: @event-red;
+            color: @event-orange;
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        img{
+            margin-top: 3em;
+        }
+        h1{
+            color: @event-orange;
+            font-size: 60px;
+            font-family: 'greatlakes';
+        }
+        .event-down{
+            color: @event-orange;
+            font-size: 40px;
+            width: 400px;
+            margin: 0 auto;
+            cursor: pointer;
+            h2{
+                margin: 0;
+                font-size: 45px;
+            }
+            i{
+                transition: margin-top 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            }
+        }
+        .event-down:hover{
+            i{
+                margin-top: 20px;
+                transition: margin-top 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            }
+        }
+    }
+    .event-home-info{
+        min-height: 100%;
+        .row{
+        max-width: 800px;
+            margin-bottom: 50px;
+        h1{
+            color: @event-red;
+            font-size: 50px;
+            font-family: 'greatlakes';
+        }
+        p{
+            text-align: justify;
+        }
+        }
+    }
 }

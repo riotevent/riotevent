@@ -23,7 +23,8 @@ var EventSchema = new Schema({
 	},
 	url: {
 		type: String,
-		default: '',
+        unique: true,
+        required: 'Please fill in a url',
 		trim: true
 	},
 	time_description: {
