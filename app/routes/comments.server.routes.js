@@ -14,6 +14,10 @@ module.exports = function(app) {
 		.put(users.requiresLogin, comments.hasAuthorization, comments.update)
 		.delete(users.requiresLogin, comments.hasAuthorization, comments.delete);
 
+	app.route('/eventcomment/:eventId')
+		.get(comments.read);
+
 	// Finish by binding the Comment middleware
 	app.param('commentId', comments.commentByID);
+	app.param('eventId', comments.commentByEventID);
 };

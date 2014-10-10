@@ -1,8 +1,8 @@
 'use strict';
 
 // Events controller
-angular.module('events').controller('EventsController', ['$scope', '$stateParams', '$location', '$http', 'Authentication', 'Events', 'EventCreate', '$upload',
- function ($scope, $stateParams, $location, $http, Authentication, Events, EventCreate, $upload) {
+angular.module('events').controller('EventsController', ['$scope', '$stateParams', '$location', '$http', 'Authentication', 'Events', 'EventCreate', 'Comments', 'Comment', '$upload',
+ function ($scope, $stateParams, $location, $http, Authentication, Events, EventCreate, Comments, Comment, $upload) {
         $scope.authentication = Authentication;
 
         //SELECT TAGS CATEGORY
@@ -31,6 +31,32 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
 
         $scope.today = new Date();
         $scope.today = +$scope.today
+
+        $scope.comment_panel_cat_nb = function (cat) {
+            for(var i = 0; i < $scope.event.comment_cats.length && $scope.event.comment_cats[i] != cat; i++){}
+            return i;
+        };
+
+        $scope.comment_cats_class_show = function(id) {
+            if($scope.event.comment_cats_disable[id].show == true)
+                return "comment-cat-disable";
+            else
+                return "";
+        };
+
+        $scope.comment_cats_class_new = function(id) {
+            if($scope.event.comment_cats_disable[id].new == true)
+                return "comment-cat-disable";
+            else
+                return "";
+        };
+        $scope.comment_cats_disable_new = function(id) {
+            angular.forEach($scope.event.comment_cats_disable, function (val, key) {
+                if(key !== id) $scope.event.comment_cats_disable[key].new = true;
+                else $scope.event.comment_cats_disable[key].new = false;
+            });
+            $scope.newcomment.category = $scope.event.comment_cats[id];
+        };
 
         // Create new Event
         $scope.create = function () {
@@ -170,6 +196,7 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
             $scope.event = Events.get({
                 url: $stateParams.url
             }, function() {
+                //Initialize the map
                 if($scope.event.location_latitude !== null) {
                     $scope.markers.marker = {};
                     $scope.markers.marker.lat = $scope.event.location_latitude;
@@ -183,6 +210,7 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
                     $scope.bounds.southWest.lng = $scope.event.map_bounding_box[2];
                     $scope.bounds.northEast.lng = $scope.event.map_bounding_box[3];
                 }
+                //Set number of info columns
                 if(!$location.path().replace($stateParams.url,'').contains('edit')) {
                     $scope.event_info_col = 0;
                     if($scope.event.time_description){
@@ -196,7 +224,106 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
                     }
                     $scope.event_info_col = 12/$scope.event_info_col;
                 }
+                //Set the buttons for comment categories functionalities
+                $scope.event.comment_cats_disable = [];
+                angular.forEach($scope.event.comment_cats, function(value, key) {
+                    $scope.event.comment_cats_disable[key] = {};
+                    $scope.event.comment_cats_disable[key].show = false;
+                    $scope.event.comment_cats_disable[key].new = true;
+                });
+                $scope.newcomment = {};
+                $scope.newcomment.category = "";
+                $scope.findComments();
             });
         };
+
+     // Create new Comment
+    $scope.createcomment = function () {
+        var comment = new Comment({
+            text: $scope.newcomment.text.replace('\n', '<br/>'),
+            category: $scope.newcomment.category,
+            parent_comment: null,
+            event: $scope.event._id
+        });
+        // After save
+        comment.$save(function (response) {
+            $scope.findComments();
+            $scope.newcomment.text ="";
+        }, function (errorResponse) {
+            $scope.error = errorResponse.data.message;
+        });
+    };
+     // Create new Answer
+    $scope.createanswer = function (index, id) {
+        console.log(id);
+        console.log(index);
+        var comment = new Comment({
+            text: $scope.newanswer[index].text.replace('\n', '<br/>'),
+            category: null,
+            parent_comment: id,
+            event: $scope.event._id
+        });
+        // After save
+        comment.$save(function (response) {
+            $scope.findComments();
+            $scope.newcomment.text ="";
+        }, function (errorResponse) {
+            $scope.error = errorResponse.data.message;
+        });
+    };
+
+     // Remove existing Comment
+     $scope.removeComment = function (comment) {
+         if (comment) {
+             if(angular.isDefined(comment.answers)){
+                for(var i = 0; i < comment.answers.length; i++) {
+                    var getanswer = Comment.get({
+                        id: comment.answers._id
+                    }, function() {
+                        getanswer.$remove();
+                    });
+                }
+             }
+             var getcomment = Comment.get({
+                 id: comment._id
+             }, function() {
+                 getcomment.$remove();
+                 $scope.findComments();
+             });
+
+        } else {
+            $scope.comment.$remove(function () {
+                $scope.findComments();
+            });
+        }
+    };
+
+        // Find a list of Comments
+        $scope.findComments = function () {
+            $scope.comments = Comments.query({
+                id: $scope.event._id
+            }, function() {
+                // Find the answers and add them into the comment
+                for(var i = 0; i < $scope.comments.length; i++) {
+                    if($scope.comments[i].parent_comment != null) {
+                        for(var j = 0; j < $scope.comments.length; j++) {
+                            if($scope.comments[j]._id == $scope.comments[i].parent_comment) {
+                                if(angular.isUndefined($scope.comments[j].answers)) {
+                                    $scope.comments[j].answers = [];
+                                }
+                                $scope.comments[j].answers.push($scope.comments[i]);
+                            }
+                        }
+                        $scope.comments.splice(i, 1);
+                        i--;
+                    }
+                }
+                console.log($scope.comments);
+            });
+            $scope.show_answer = [];
+            $scope.newanswer = [];
+        };
+
+
  }
 ]);

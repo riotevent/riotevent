@@ -1,19 +1,19 @@
-<section data-ng-controller="EventsController" data-ng-init="findOne()">
+<section class="container" data-ng-controller="EventsController" data-ng-init="findOne()">
 	<div class="page-header">
 		<h1>{{event.title}}
             <a class="btn btn-danger" ng-show="confirm_remove" data-ng-click="remove();">
-                <i class="glyphicon glyphicon-trash"></i> Click here if you are sure you want to delete this event
+                <i class="fa fa-trash"></i> Click here if you are sure you want to delete this event
             </a>
     	<div class="pull-right" data-ng-show="authentication.user._id == event.user._id">
 
             <a class="btn btn-primary" href="/#!/events/{{event.url}}/edit">
-                <i class="glyphicon glyphicon-edit"></i>
+                <i class="fa fa-pencil-square-o"></i>
             </a>
             <a class="btn btn-primary" ng-hide="sure_remove" data-ng-click="sure_remove = true">
-                <i class="glyphicon glyphicon-trash"></i>
+                <i class="fa fa-trash"></i>
             </a>
             <a class="btn btn-warning" ng-show="sure_remove && !confirm_remove" data-ng-click="confirm_remove = true">
-                <i class="glyphicon glyphicon-trash"></i> Sure ?
+                <i class="fa fa-trash"></i> Sure ?
             </a>
 
         </div></h1>
@@ -52,6 +52,67 @@
         <div class="row" ng-show="event.location_latitude != null">
             <div class="col-md-12">
                 <map-event-view ></map-event-view>
+            </div>
+        </div>
+        <div class="row comments">
+            <div class="col-md-12">
+                <h2 class="comments-title">Comments<span ng-repeat="categorie in event.comment_cats"> <span class="{{comment_cats_class_show($index)}} comment-cat comment-cat-{{$index}}" ng-bind="categorie" ng-click="event.comment_cats_disable[$index].show = !event.comment_cats_disable[$index].show"></span></span></h2>
+                <div class="alert alert-warning text-center" data-ng-hide="authentication.user">
+                    You want to add a comment ? You can <a href="/#!/signup">sign up</a> and add one.
+                </div>
+                <div ng-repeat="comment in comments" ng-hide="event.comment_cats_disable[{{comment_panel_cat_nb(comment.category)}}].show" class="row panel comment-panel comment-panel-{{comment_panel_cat_nb(comment.category)}}" >
+                    <div class="col-md-12">
+                        <div class="comment-content">
+                            <p>
+                                <span class="comment-title"><span ng-bind="comment.user.displayName"></span> <i class="fa fa-comments-o"></i> <span ng-bind="comment.category"></span> </span><span class="comment-date" data-ng-bind="comment.created | date:'medium'"></span>
+                                <span class="comment-edit">
+                                    <i class="fa fa-link comment-edit"></i>
+                                </span>
+                                <span class="pull-right comment-edit">
+                                    <i ng-show="authentication.user" ng-click="show_answer[$index] = true" class="fa fa-comment"></i>
+
+                                    <i ng-show="authentication.user._id == comment.user._id" class="fa fa-pencil-square-o"></i>
+                                    <i ng-click="removeComment(comment)" ng-show="authentication.user._id == comment.user._id" class="fa fa-trash"></i>
+                                </span>
+                            </p>
+                        <p data-ng-bind-html="comment.text"></p>
+                        </div>
+                        <div class="comment-answers">
+                            <div ng-repeat="answer in comment.answers"class="comment-answer">
+                                <p><i class="fa fa-share"></i> <span ng-bind="answer.user.displayName"></span> answered on <span data-ng-bind="answer.created | date:'medium'"></span>
+                                    <span class="comment-edit">
+                                        <i ng-show="authentication.user._id == answer.user._id" class="fa fa-pencil-square-o"></i>
+                                        <i ng-click="removeComment(answer)" ng-show="authentication.user._id == answer.user._id" class="fa fa-trash"></i>
+                                    </span>
+                                </p>
+                                <p data-ng-bind-html="answer.text"></p>
+                            </div>
+                            <div class="row comment-answer-form" ng-show="show_answer[$index]">
+
+                                <div class="col-md-12">
+                                    <form data-ng-submit="createanswer($index, comment._id)" novalidate>
+                                        <textarea class="form-control" ng-model="newanswer[$index].text" placeholder="Enter a new answer here"></textarea>
+                                        <input type="submit" onclick="return false;" class="hidden">
+                                        <div class="form-group">
+                                            <button class="btn btn-default btn-submit">Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment-foot-form" ng-show="authentication.user">
+                <h4>New comment ? Choose a categorie : <span ng-repeat="categorie in event.comment_cats"> <span class="{{comment_cats_class_new($index)}} comment-cat comment-cat-{{$index}}" ng-bind="categorie" ng-click="comment_cats_disable_new($index)"></span></span></h4>
+                    <form ng-show="newcomment.category != ''" data-ng-submit="createcomment()" novalidate>
+                        <textarea class="form-control" data-ng-model="newcomment.text" placeholder="Enter a new comment here"></textarea>
+                        <input type="submit" onclick="return false;" class="hidden">
+                        <div class="form-group">
+                            <button class="btn btn-default btn-submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+                <br />
             </div>
         </div>
 	</div>

@@ -1,12 +1,15 @@
-@event-orange :#fa0;
+@event-orange :#E5AD40;
+@event-orange-light :#e6cd9b;
+@event-orange-grey :#fae9b8;
+@event-red : #8E110B;
 @event-blue :#007dd8;
 @event-grey :#e0e0e0;
+@event-grey-light :#f6f6f6;
 
  body {
      background-color: #f4f4f4;
 	.section-create-event {
 		max-width: 800px;
-		margin: 0 auto 0 auto;
 		.form-event-creation {
 			.title-info{
 				color: @event-blue;
@@ -22,77 +25,90 @@
 			.col-url-11 {
 				padding-right: 0;
 			}
-			.form-group {
-				margin-top: 10px;
-				margin-bottom: 10px;
-				.ta-scroll-window.form-control{
-					border-radius: 0px;
-				}
-				.ta-root.focussed .ta-scroll-window.form-control{
-					border-color: @event-orange;
-					box-shadow: 0px 1px 1px@event-orange;
-					transition: border-color 0.15s;
-				}
-				.select2-container-active{
-					.select2-choices{
-						border-color: @event-orange;
-						box-shadow: 0px 1px 1px@event-orange;
-						transition: border-color 0.15s;
-					}
-				}
 
-			}
-			.form-control:focus {
-				border-color: @event-orange;
-				box-shadow: 0px 1px 1px@event-orange;
-				transition: border-color 0.15s;
-			}
-			.big-input {
-				height: 45px;
-				border-radius: 0px;
-			}
-			.little-input {
-				height: 30px;
-				border-radius: 0px;
-				display: inline-block;
-			}
-			textarea {
-				border-radius: 0px;
-			}
-			.btn-fake {
-				cursor: default;
-				background-color: @event-grey;
-				background-image: none;
-			}
-			.btn-submit{
-				width: 100%;
-				background-image: none;
-				background-color: @event-grey;
-				border-radius: 0px;
-			}
-			.btn-submit:hover{
-				background-color: @event-orange;
-				transition: background-color 0.15s;
-			}
-			.select2-container{
-				width: 100%;
-				.select2-choices{
-					min-height: 45px;
-				}
-			}
-			a {
-				cursor: pointer;
-			}
-			p{
-				margin: 0px;
-			}
 		}
 	}
+
+     .alert-warning {
+         background-image: none;
+         background-color: @event-orange-light;
+         border-radius: 0;
+         margin-top: 20px;
+     }
+
+    .form-group {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        .ta-scroll-window.form-control{
+            border-radius: 0px;
+        }
+        .ta-root.focussed .ta-scroll-window.form-control{
+            border-color: @event-orange;
+            box-shadow: 0px 1px 1px@event-orange;
+            transition: border-color 0.15s;
+        }
+        .select2-container-active{
+            .select2-choices{
+                border-color: @event-orange;
+                box-shadow: 0px 1px 1px@event-orange;
+                transition: border-color 0.15s;
+            }
+        }
+
+    }
+    .form-control:focus {
+        border-color: @event-orange;
+        box-shadow: 0px 1px 1px@event-orange;
+        transition: border-color 0.15s;
+    }
+    .big-input {
+        height: 45px;
+        border-radius: 0px;
+    }
+    .little-input {
+        height: 30px;
+        border-radius: 0px;
+        display: inline-block;
+    }
+    textarea {
+        border-radius: 0px;
+    }
+    .btn-fake {
+        cursor: default;
+        background-color: @event-grey;
+        background-image: none;
+    }
+    .btn-submit{
+        width: 100%;
+        background-image: none;
+        background-color: @event-grey;
+        border-radius: 0px;
+    }
+    .btn-submit:hover{
+        background-color: @event-orange;
+        transition: background-color 0.15s;
+    }
+    .select2-container{
+        width: 100%;
+        .select2-choices{
+            min-height: 45px;
+        }
+    }
+    a {
+        cursor: pointer;
+    }
+    p{
+        margin: 0px;
+    }
+
+     .panel{
+        margin: 20px 0;
+     }
 
      .row-event-info{
          padding: 5px;
          text-align: center;
-         margin: 20px 0;
+
          .col-event-info{
 
              p{
@@ -141,6 +157,10 @@
                     color: rgba(0,0,0,0.54);
                     font-size: 14px;
                 }
+                h3{
+                    margin-top: 10px;
+                    font-size: 20px
+                }
             }
             .list-group-item-heading {
                 color: rgba(0, 0, 0, 0.77);
@@ -164,8 +184,101 @@
             }
         }
     }
+     .comments{
+         .comments-title{
+             padding-bottom: 10px;
+         }
+         .comment-foot-form{
+             padding-top: 20px;
+             border-top: 1px dashed black;
+         }
+         .comment-cat{
+             font-size: 15px;
+             font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+             border-radius: 5px;
+             padding: 5px;
+             cursor: pointer;
+         }
+         .comment-cat:hover{
+             opacity: 0.7;
+         }
+         .comment-cat-0{
+             background-color: @event-orange;
+         }
+         .comment-cat-1{
+             background-color: @event-red;
+         }
+         .comment-cat-2{
+             background-color: @event-blue;
+         }
+
+         .comment-cat-disable{
+             background-color: @event-grey;
+         }
+         .comment-panel{
+             margin: 15px 0;
+             padding-top: 5px;
+             border-radius: 0;
+             border: 0;
+             box-shadow: 0px 5px 15px -10px rgba(0, 0, 0, 0.7);
+             .comment-title{
+                 font-size: 16px;
+             }
+             .comment-date{
+                font-style: italic;
+             }
+         }
+         .comment-content{
+             padding-bottom: 5px;
+
+         }
+         .comment-edit{
+             font-size: 15px;
+             cursor: pointer;
+             i{
+                 padding-left: 5px;
+
+             }
+             i:hover{
+                 color: @event-blue;
+             }
+         }
+         .comment-panel-0{
+             border-top: 5px solid @event-orange;
+             .comment-answer{
+                 border-left: 4px solid @event-orange;
+             }
+         }
+         .comment-panel-1{
+             border-top: 5px solid @event-red;
+             .comment-answer{
+                 border-left: 3px solid @event-red;
+             }
+         }
+         .comment-panel-2{
+             border-top: 5px solid @event-blue;
+             .comment-answer{
+                 border-left: 3px solid @event-blue;
+             }
+         }
+         .comment-answer{
+             margin-top : 4px;
+             padding: 5px;
+
+         }
+         .comment-answers{
+             margin-left: -15px;
+             margin-right: -15px;
+             background-color: @event-grey-light;
+             .comment-answer-form{
+                 padding: 15px;
+             }
+         }
+     }
 
 }
+
+
 
 .select2-drop-active{
     border-color: @event-orange;

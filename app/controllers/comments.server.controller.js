@@ -118,6 +118,17 @@ exports.commentByID = function(req, res, next, id) { Comment.findById(id).popula
 };
 
 /**
+ * Comment middleware
+ */
+exports.commentByEventID = function(req, res, next, id) { Comment.where('event').equals(id).populate('user', 'displayName').exec(function(err, comment) {
+		if (err) return next(err);
+		if (! comment) return next(new Error('Failed to load Comment ' + id));
+		req.comment = comment ;
+		next();
+	});
+};
+
+/**
  * Comment authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
