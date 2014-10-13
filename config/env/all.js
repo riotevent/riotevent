@@ -36,7 +36,8 @@ module.exports = {
 				'public/lib/leaflet-dist/leaflet-src.js',
 				'public/lib/angular-leaflet-directive/dist/angular-leaflet-directive.js',
 				'public/lib/ng-tags-input/ng-tags-input.js',
-                'public/lib/ng-file-upload/angular-file-upload.js'
+                'public/lib/ng-file-upload/angular-file-upload.js',
+                'public/lib/angular-scroll/angular-scroll.js'
 			]
 		},
 		css: [

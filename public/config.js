@@ -4,7 +4,7 @@
 var ApplicationConfiguration = (function() {
 	// Init module configuration options
 	var applicationModuleName = 'riotevent';
-	var applicationModuleVendorDependencies = ['ngResource', 'ngCookies',  'ngAnimate',  'ngTouch',  'ngSanitize',  'ui.router', 'ui.bootstrap', 'ui.utils', 'textAngular',	'leaflet-directive', 'ngTagsInput', 'angularFileUpload'];
+	var applicationModuleVendorDependencies = ['ngResource', 'ngCookies',  'ngAnimate',  'ngTouch',  'ngSanitize',  'ui.router', 'ui.bootstrap', 'ui.utils', 'textAngular',	'leaflet-directive', 'ngTagsInput', 'duScroll', 'angularFileUpload'];
 
 	// Add a new vertical module
 	var registerModule = function(moduleName) {

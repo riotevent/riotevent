@@ -19,6 +19,7 @@
     "textAngular": "latest",
     "angular-leaflet-directive": "latest",
     "ng-file-upload": "latest",
-    "ng-tags-input": "~2.1.1"
+    "ng-tags-input": "~2.1.1",
+    "angular-scroll": "~0.6.2"
   }
 }

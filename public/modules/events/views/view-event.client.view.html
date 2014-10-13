@@ -62,7 +62,7 @@
         <div class="row comments">
             <div class="col-md-12">
                 <h2 class="comments-title">Comments<span ng-repeat="category in event.comment_cats"> <span class="{{comment_cats_class_show($index)}} comment-cat comment-cat-{{$index}}" ng-bind="category.text" ng-click="event.comment_cats_disable[$index].show = !event.comment_cats_disable[$index].show"></span></span></h2>
-                <div ng-repeat="comment in comments" ng-hide="event.comment_cats_disable[{{comment_panel_cat_nb(comment.category)}}].show" class="row panel comment-panel comment-panel-{{comment_panel_cat_nb(comment.category)}}" >
+                <div ng-repeat="comment in comments" ng-hide="event.comment_cats_disable[{{comment_panel_cat_nb(comment.category)}}].show" class="row panel comment-panel comment-panel-{{comment_panel_cat_nb(comment.category)}}" id="comment{{$index+1}}">
                     <div class="col-md-12">
                         <div class="comment-content">
                             <p>

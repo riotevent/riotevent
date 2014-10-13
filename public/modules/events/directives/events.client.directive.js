@@ -1,5 +1,6 @@
 'use strict';
 
+
 angular.module('events').directive('nextDays', function () {
     return {
         restrict: 'E',
@@ -15,10 +16,6 @@ angular.module('events').directive('nextDays', function () {
                 var date = new Date($scope.date);
                 date = +date;
                 var difference = (date - $scope.today)/86400000+1;
-                console.log($scope.today);
-                console.log(date);
-                console.log(difference);
-
 
                 if(difference > 0 && difference <= 1) {
                     $scope.nextdate = 'Today';

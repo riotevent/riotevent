@@ -1,9 +1,27 @@
 'use strict';
 
 // Events controller
-angular.module('events').controller('EventsController', ['$scope', '$stateParams', '$location', '$http', '$q', 'Authentication', 'Events', 'EventCreate', 'Comments', 'Comment', '$upload',
- function ($scope, $stateParams, $location, $http, $q, Authentication, Events, EventCreate, Comments, Comment, $upload) {
+angular.module('events').controller('EventsController', ['$scope', '$stateParams', '$location', '$http', '$window', '$q', 'Authentication', 'Events', 'EventCreate', 'Comments', 'Comment', '$upload', '$document',
+ function ($scope, $stateParams, $location, $http, $window, $q, Authentication, Events, EventCreate, Comments, Comment, $upload, $document) {
         $scope.authentication = Authentication;
+
+        $window.scrollTo(0, 0);
+
+        $scope.scrollToComment = function (id) {
+            var element = document.getElementById(id);
+            if(element != null) {
+                var position = 0;
+                while(element) {
+                    position += (element.offsetTop - element.scrollTop + element.clientTop);
+                    element = element.offsetParent;
+                }
+                console.log(position);
+                $window.scrollTo(0, position-15);
+            }
+            else {
+                console.error("Comment '" + id + "' does not exist");
+            }
+        }
 
         //SELECT TAGS CATEGORY
         $scope.event = {};
@@ -345,6 +363,7 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
 
         // Find a list of Comments
         $scope.findComments = function () {
+
             $scope.comments = Comments.query({
                 id: $scope.event._id
             }, function() {
@@ -363,6 +382,12 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
                         i--;
                     }
                 }
+                setTimeout(function () {
+                    if($location.hash() != "") {
+                       $scope.scrollToComment($location.hash());
+                    }
+                });
+
             });
             $scope.show_answer = [];
             $scope.newanswer = [];
