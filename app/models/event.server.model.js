@@ -74,6 +74,9 @@ var EventSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'User'
 	},
+	event_tags: {
+		type: Array
+	},
 	comment_cats: {
 		type: Array
 	}

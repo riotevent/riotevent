@@ -6,7 +6,7 @@
 		<div class="col-md-12">
 			<form class="form-horizontal form-event-creation" data-ng-submit="create()" novalidate>
 				<fieldset>
-					<h2><i class="fa fa-tags"></i> General Info</h2>
+					<h2><i class="fa fa-info"></i> General Info</h2>
 					<event-title-url></event-title-url>
 					<event-datepicker></event-datepicker>
 
@@ -33,6 +33,14 @@
 						</p>
 					</div>
 
+                    <h2><i class="fa fa-tags "></i> Event Tags</h2>
+					<div class="form-group">
+
+                        <tags-input ng-model="event.event_tags" replace-spaces-with-dashes="false" placeholder="Add a tag">
+                        </tags-input>
+						<p class="help-block">You can add tags to your event.</p>
+					</div>
+
 					<h2><i class="fa fa-paragraph"></i> Description</h2>
 					<div class="form-group">
 						<div class="controls">
@@ -42,7 +50,9 @@
 
                     <h2><i class="fa fa-comments "></i> Discussion Categories</h2>
 					<div class="form-group">
-						<input class="big-input" type="hidden" ui-select2="select2Options" data-ng-model="event.comment_cats">
+						<tags-input ng-model="event.comment_cats" replace-spaces-with-dashes="false" placeholder="Add a category">
+                            <auto-complete source="loadCats($query)" min-length="0" load-on-focus="true" load-on-empty="true"></auto-complete>
+                        </tags-input>
 						<p class="help-block">You can select here the comments categories.</p>
 					</div>
 

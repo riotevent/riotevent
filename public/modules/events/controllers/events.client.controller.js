@@ -1,20 +1,38 @@
 'use strict';
 
 // Events controller
-angular.module('events').controller('EventsController', ['$scope', '$stateParams', '$location', '$http', 'Authentication', 'Events', 'EventCreate', 'Comments', 'Comment', '$upload',
- function ($scope, $stateParams, $location, $http, Authentication, Events, EventCreate, Comments, Comment, $upload) {
+angular.module('events').controller('EventsController', ['$scope', '$stateParams', '$location', '$http', '$q', 'Authentication', 'Events', 'EventCreate', 'Comments', 'Comment', '$upload',
+ function ($scope, $stateParams, $location, $http, $q, Authentication, Events, EventCreate, Comments, Comment, $upload) {
         $scope.authentication = Authentication;
 
         //SELECT TAGS CATEGORY
         $scope.event = {};
         $scope.event.comment_cats = ['General discussion'];
 
-        $scope.select2Options = {
-            'multiple': true,
-            'simple_tags': true,
-            'tags': ['General discussion', 'Ride sharing', 'Hospitality'] // Can be empty list.
-        };
+        $scope.loadTags = function(query) {
+            var deferred = $q.defer();
+            var tags = $scope.eventstags;
+            var matchingTags = tags.filter(function(item) {
+                return item.text.toLowerCase().indexOf(query.toLowerCase()) != -1;
+            });
+            deferred.resolve(matchingTags);
+            return deferred.promise;
+        }
 
+        $scope.loadCats = function(query) {
+            console.log(query.toLowerCase());
+            var deferred = $q.defer();
+            var tags = [
+                { text: 'General discussion' },
+                { text: 'Ride sharing' },
+                { text: 'Hospitality' }
+            ];
+            var matchingTags = tags.filter(function(item) {
+                return item.text.toLowerCase().indexOf(query.toLowerCase()) != -1;
+            });
+            deferred.resolve(matchingTags);
+            return deferred.promise;
+        }
 
         $scope.onFileSelect = function (image) {
             $scope.uploadInProgress = true;
@@ -33,7 +51,7 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
         $scope.today = +$scope.today
 
         $scope.comment_panel_cat_nb = function (cat) {
-            for(var i = 0; i < $scope.event.comment_cats.length && $scope.event.comment_cats[i] != cat; i++){}
+            for(var i = 0; i < $scope.event.comment_cats.length && $scope.event.comment_cats[i].text != cat; i++){}
             return i;
         };
 
@@ -58,6 +76,10 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
             $scope.newcomment.category = $scope.event.comment_cats[id];
         };
 
+        $scope.open_image = function() {
+           window.open('/uploaded/files/' + $scope.event.image, '_blank');
+        }
+
         // Create new Event
         $scope.create = function () {
             var eventCreation = function() {
@@ -78,6 +100,7 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
                     location_longitude: $scope.markers.marker ? $scope.markers.marker.lng : null,
                     map_bounding_box: $scope.event.map_bounding_box,
                     comment_cats: $scope.event.comment_cats,
+                    event_tags: $scope.event.event_tags,
                     pass: $scope.event.pass,
                     image: $scope.event.image
                 });
@@ -188,7 +211,24 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
 
         // Find a list of Events
         $scope.find = function () {
-            $scope.events = Events.query();
+            $scope.events = Events.query({},function() {
+                var eventstags = [];
+
+                //Get all event tags
+                for(var i = 0; i < $scope.events.length; i++){
+                    for(var j = 0;  j < $scope.events[i].event_tags.length; j++){
+                        for(var k = 0;  k < eventstags.length; k++){
+                            if(eventstags[k].text.toLowerCase() == $scope.events[i].event_tags[j].text.toLowerCase()) {
+                                break;
+                            }
+                        }
+                        if(k >= eventstags.length) {
+                            eventstags.push($scope.events[i].event_tags[j]);
+                        }
+                    }
+                }
+                $scope.eventstags = eventstags;
+            });
         };
 
         // Find existing Event
@@ -196,8 +236,9 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
             $scope.event = Events.get({
                 url: $stateParams.url
             }, function() {
+                console.log($scope.event);
                 //Initialize the map
-                if($scope.event.location_latitude !== null) {
+                if($scope.event.location_latitude !=- null) {
                     $scope.markers.marker = {};
                     $scope.markers.marker.lat = $scope.event.location_latitude;
                     $scope.markers.marker.lng = $scope.event.location_longitude;
@@ -205,6 +246,7 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
                     if($location.path().replace($stateParams.url,'').contains('edit')) {
                         $scope.markers.marker.draggable = true;
                     }
+                    console.log($scope.event.map_bounding_box);
                     $scope.bounds.southWest.lat = $scope.event.map_bounding_box[0];
                     $scope.bounds.northEast.lat = $scope.event.map_bounding_box[1];
                     $scope.bounds.southWest.lng = $scope.event.map_bounding_box[2];
@@ -224,6 +266,9 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
                     }
                     $scope.event_info_col = 12/$scope.event_info_col;
                 }
+
+                $scope.image_url = "uploaded/files/" + $scope.event.image + "?dim=1140x400";
+                console.log($scope.image_url);
                 //Set the buttons for comment categories functionalities
                 $scope.event.comment_cats_disable = [];
                 angular.forEach($scope.event.comment_cats, function(value, key) {
@@ -241,7 +286,7 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
     $scope.createcomment = function () {
         var comment = new Comment({
             text: $scope.newcomment.text.replace('\n', '<br/>'),
-            category: $scope.newcomment.category,
+            category: $scope.newcomment.category.text,
             parent_comment: null,
             event: $scope.event._id
         });
@@ -318,7 +363,6 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
                         i--;
                     }
                 }
-                console.log($scope.comments);
             });
             $scope.show_answer = [];
             $scope.newanswer = [];

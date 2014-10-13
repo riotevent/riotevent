@@ -1,7 +1,7 @@
 {
   "name": "riotevent",
   "version": "0.0.1",
-  "description": "event website",
+  "description": "event platform",
   "dependencies": {
     "bootstrap": "latest",
     "angular": "latest",
@@ -18,8 +18,7 @@
     "jquery": "latest",
     "textAngular": "latest",
     "angular-leaflet-directive": "latest",
-    "angular-ui-select2": "latest",
-    "select2": "latest",
-    "ng-file-upload": "latest"
+    "ng-file-upload": "latest",
+    "ng-tags-input": "~2.1.1"
   }
 }

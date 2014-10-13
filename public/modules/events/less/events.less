@@ -5,6 +5,7 @@
 @event-blue :#007dd8;
 @event-grey :#e0e0e0;
 @event-grey-light :#f6f6f6;
+@event-grey-dark :#585858;
 
  body {
      background-color: #f4f4f4;
@@ -39,32 +40,25 @@
     .form-group {
         margin-top: 10px;
         margin-bottom: 10px;
-        .ta-scroll-window.form-control{
-            border-radius: 0px;
-        }
-        .ta-root.focussed .ta-scroll-window.form-control{
-            border-color: @event-orange;
-            box-shadow: 0px 1px 1px@event-orange;
-            transition: border-color 0.15s;
-        }
-        .select2-container-active{
-            .select2-choices{
-                border-color: @event-orange;
-                box-shadow: 0px 1px 1px@event-orange;
-                transition: border-color 0.15s;
-            }
-        }
-
     }
-    .form-control:focus {
+    .form-control:focus, tags-input .tags.focused {
         border-color: @event-orange;
         box-shadow: 0px 1px 1px@event-orange;
         transition: border-color 0.15s;
     }
-    .big-input {
-        height: 45px;
-        border-radius: 0px;
-    }
+     .big-input,{
+         height: 45px;
+         border-radius: 0px;
+     }
+     .tags{
+         height: 45px;
+         border: 1px solid #CCC;
+         box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+     }
+     tags-input .tags .tag-item {
+         background: none;
+         background-color: @event-orange;
+     }
     .little-input {
         height: 30px;
         border-radius: 0px;
@@ -88,12 +82,6 @@
         background-color: @event-orange;
         transition: background-color 0.15s;
     }
-    .select2-container{
-        width: 100%;
-        .select2-choices{
-            min-height: 45px;
-        }
-    }
     a {
         cursor: pointer;
     }
@@ -101,8 +89,36 @@
         margin: 0px;
     }
 
+     .event-category{
+         clear: both;
+         text-align: center;
+         background-color: @event-orange;
+         font-size: 14px;
+         padding: 6px;
+         border-radius: 2px;
+         text-shadow: 0px 1px 2px @event-grey;
+     }
+
      .panel{
         margin: 20px 0;
+     }
+     .img-col{
+         transition: opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+         a{
+             opacity: 0;
+             position: absolute;
+             left: 30px;
+             top: 15px;
+             transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+         }
+     }
+     .img-col:hover{
+         opacity: 0.95;
+         transition: opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+         a{
+             opacity: 1;
+             transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+         }
      }
 
      .row-event-info{
@@ -193,27 +209,28 @@
              border-top: 1px dashed black;
          }
          .comment-cat{
+             background-color: white;
              font-size: 15px;
              font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-             border-radius: 5px;
+             border-radius: 2px;
              padding: 5px;
              cursor: pointer;
          }
          .comment-cat:hover{
-             opacity: 0.7;
+            background-color: @event-grey;
          }
          .comment-cat-0{
-             background-color: @event-orange;
+             border-top: 3px solid @event-orange;
          }
          .comment-cat-1{
-             background-color: @event-red;
+             border-top: 3px solid @event-red;
          }
          .comment-cat-2{
-             background-color: @event-blue;
+             border-top: 3px solid @event-blue;
          }
 
          .comment-cat-disable{
-             background-color: @event-grey;
+             border-top: 0px;
          }
          .comment-panel{
              margin: 15px 0;
@@ -226,6 +243,9 @@
              }
              .comment-date{
                 font-style: italic;
+             }
+             .comment-text{
+                color: @event-grey-dark;
              }
          }
          .comment-content{

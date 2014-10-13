@@ -1,6 +1,7 @@
 <section class="container" data-ng-controller="EventsController" data-ng-init="findOne()">
 	<div class="page-header">
-		<h1>{{event.title}}
+		<h1>{{event.title}}<br />
+            <span class="event-category" ng-if="event.event_tags.length !== 0"><span ng-repeat="tag in event.event_tags">#<span ng-bind="tag.text"></span> </span></span>
             <a class="btn btn-danger" ng-show="confirm_remove" data-ng-click="remove();">
                 <i class="fa fa-trash"></i> Click here if you are sure you want to delete this event
             </a>
@@ -28,8 +29,11 @@
 	</div>
     <div class="page-body">
         <div class="row">
-            <div class="col-md-12">
-                <img class="img-thumbnail" src="uploaded/files/{{event.image}}?dim=1140x400" ng-show="event.image" />
+            <div class="col-md-12 img-col">
+                <img class="img-thumbnail" ng-src="{{image_url}}" ng-show="event.image" />
+                <a class="btn btn-primary" ng-click="open_image()">
+                    <i class="fa fa-download"></i>
+                </a>
             </div>
         </div>
         <div class="row panel row-event-info" ng-if="event_info_col < 12">
@@ -46,6 +50,7 @@
                 <p ng-bind="event.location_name"></p>
             </div>
         </div>
+
         <div class="row event-description" ng-if="event.description != ''">
             <div class="col-md-12" ng-bind-html="event.description"></div>
         </div>
@@ -56,10 +61,7 @@
         </div>
         <div class="row comments">
             <div class="col-md-12">
-                <h2 class="comments-title">Comments<span ng-repeat="categorie in event.comment_cats"> <span class="{{comment_cats_class_show($index)}} comment-cat comment-cat-{{$index}}" ng-bind="categorie" ng-click="event.comment_cats_disable[$index].show = !event.comment_cats_disable[$index].show"></span></span></h2>
-                <div class="alert alert-warning text-center" data-ng-hide="authentication.user">
-                    You want to add a comment ? You can <a href="/#!/signup">sign up</a> and add one.
-                </div>
+                <h2 class="comments-title">Comments<span ng-repeat="category in event.comment_cats"> <span class="{{comment_cats_class_show($index)}} comment-cat comment-cat-{{$index}}" ng-bind="category.text" ng-click="event.comment_cats_disable[$index].show = !event.comment_cats_disable[$index].show"></span></span></h2>
                 <div ng-repeat="comment in comments" ng-hide="event.comment_cats_disable[{{comment_panel_cat_nb(comment.category)}}].show" class="row panel comment-panel comment-panel-{{comment_panel_cat_nb(comment.category)}}" >
                     <div class="col-md-12">
                         <div class="comment-content">
@@ -72,10 +74,11 @@
                                     <i ng-show="authentication.user" ng-click="show_answer[$index] = true" class="fa fa-comment"></i>
 
                                     <i ng-show="authentication.user._id == comment.user._id" class="fa fa-pencil-square-o"></i>
-                                    <i ng-click="removeComment(comment)" ng-show="authentication.user._id == comment.user._id" class="fa fa-trash"></i>
+                                    <i ng-click="sure_remove_comment[{{$index}}] = true" ng-show="authentication.user._id == comment.user._id && !sure_remove_comment[{{$index}}]" class="fa fa-trash"></i>
+                                    <i ng-click="removeComment(comment)" ng-show="sure_remove_comment[{{$index}}] && authentication.user._id == comment.user._id" class="fa fa-trash"> Click on the cat to delete this comment</i>
                                 </span>
                             </p>
-                        <p data-ng-bind-html="comment.text"></p>
+                        <p class="comment-text" data-ng-bind-html="comment.text"></p>
                         </div>
                         <div class="comment-answers">
                             <div ng-repeat="answer in comment.answers"class="comment-answer">
@@ -85,7 +88,7 @@
                                         <i ng-click="removeComment(answer)" ng-show="authentication.user._id == answer.user._id" class="fa fa-trash"></i>
                                     </span>
                                 </p>
-                                <p data-ng-bind-html="answer.text"></p>
+                                <p class="comment-text" data-ng-bind-html="answer.text"></p>
                             </div>
                             <div class="row comment-answer-form" ng-show="show_answer[$index]">
 
@@ -103,7 +106,7 @@
                     </div>
                 </div>
                 <div class="comment-foot-form" ng-show="authentication.user">
-                <h4>New comment ? Choose a categorie : <span ng-repeat="categorie in event.comment_cats"> <span class="{{comment_cats_class_new($index)}} comment-cat comment-cat-{{$index}}" ng-bind="categorie" ng-click="comment_cats_disable_new($index)"></span></span></h4>
+                <h4>New comment ? Choose a categorie : <span ng-repeat="category in event.comment_cats"> <span class="{{comment_cats_class_new($index)}} comment-cat comment-cat-{{$index}}" ng-bind="category.text" ng-click="comment_cats_disable_new($index)"></span></span></h4>
                     <form ng-show="newcomment.category != ''" data-ng-submit="createcomment()" novalidate>
                         <textarea class="form-control" data-ng-model="newcomment.text" placeholder="Enter a new comment here"></textarea>
                         <input type="submit" onclick="return false;" class="hidden">
@@ -111,6 +114,9 @@
                             <button class="btn btn-default btn-submit">Submit</button>
                         </div>
                     </form>
+                </div>
+                <div class="alert alert-warning text-center" data-ng-hide="authentication.user">
+                    You want to add a comment ? You can <a href="/#!/signup">sign up</a> and add one.
                 </div>
                 <br />
             </div>
