@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ##Riotevent Project
 Riotevent is a work in progress project to create an independent event platform.
 

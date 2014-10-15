@@ -41,16 +41,20 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 		};
 
 		// Update a user profile
-		$scope.updateUserProfile = function() {
-			$scope.success = $scope.error = null;
-			var user = new Users($scope.user);
+		$scope.updateUserProfile = function(isValid) {
+			if (isValid){
+				$scope.success = $scope.error = null;
+				var user = new Users($scope.user);
 
-			user.$update(function(response) {
-				$scope.success = true;
-				Authentication.user = response;
-			}, function(response) {
-				$scope.error = response.data.message;
-			});
+				user.$update(function(response) {
+					$scope.success = true;
+					Authentication.user = response;
+				}, function(response) {
+					$scope.error = response.data.message;
+				});
+			} else {
+				$scope.submitted = true;
+			}
 		};
 
 		// Change user password

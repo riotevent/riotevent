@@ -112,7 +112,7 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-        ngmin: {
+        ngAnnotate: {
             production: {
                 files: {
                     'public/dist/application.js': '<%= applicationJavaScriptFiles %>'
@@ -123,7 +123,8 @@ module.exports = function(grunt) {
 			default: ['nodemon', 'watch'],
 			debug: ['nodemon', 'watch', 'node-inspector'],
 			options: {
-				logConcurrentOutput: true
+				logConcurrentOutput: true,
+				limit: 10
 			}
 		},
 		env: {
@@ -171,7 +172,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('lint', ['jshint', 'less', 'csslint']);
 
 	// Build task(s).
-	grunt.registerTask('build', ['lint', 'loadConfig', 'ngmin', 'uglify', 'cssmin']);
+	grunt.registerTask('build', ['lint', 'loadConfig', 'ngAnnotate', 'uglify', 'cssmin']);
 
 	// Test task.
 	grunt.registerTask('test', ['env:test', 'mochaTest', 'karma:unit']);
