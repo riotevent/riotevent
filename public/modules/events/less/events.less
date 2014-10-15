@@ -7,6 +7,8 @@
 @event-grey-light :#f6f6f6;
 @event-grey-dark :#585858;
 
+@color-list : @event-orange, @event-red, @event-blue, #2f891f, #ff0a13, #000, #009dff, #8000ff;
+
  body {
      background-color: #f4f4f4;
 	.section-create-event {
@@ -159,7 +161,7 @@
                     display: block;
                     width: 100px;
                     height: 100px;
-                    padding: 1px;
+                    padding: 0px;
                 }
             }
             .row-content {
@@ -186,6 +188,8 @@
         }
         .list-group-item:hover {
             background-color: #e6e6e6;
+            border-right: solid 6px @event-red;
+            transition: border-right 0.1s;
         }
         .list-group-separator {
             clear: both;
@@ -229,9 +233,6 @@
              border-top: 3px solid @event-blue;
          }
 
-         .comment-cat-disable{
-             border-top: 0px;
-         }
          .comment-panel{
              margin: 15px 0;
              padding-top: 5px;
@@ -263,24 +264,27 @@
                  color: @event-blue;
              }
          }
-         .comment-panel-0{
-             border-top: 5px solid @event-orange;
-             .comment-answer{
-                 border-left: 4px solid @event-orange;
+
+         .generate-comment-colors(8);
+
+         .generate-comment-colors(@n, @i: 0) when (@i < @n) {
+             .comment-panel-@{i} {
+                 border-top: 5px solid extract(@color-list, @i+1);
+                 .comment-answer{
+                     border-left: 4px solid extract(@color-list, @i+1);
+                 }
              }
-         }
-         .comment-panel-1{
-             border-top: 5px solid @event-red;
-             .comment-answer{
-                 border-left: 3px solid @event-red;
+             .comment-cat-@{i}{
+                 border-top: 3px solid extract(@color-list, @i+1);
              }
+             .generate-comment-colors(@n, (@i + 1));
          }
-         .comment-panel-2{
-             border-top: 5px solid @event-blue;
-             .comment-answer{
-                 border-left: 3px solid @event-blue;
-             }
+
+
+         .comment-cat-disable{
+             border-top: 0px;
          }
+
          .comment-answer{
              margin-top : 4px;
              padding: 5px;
@@ -296,13 +300,4 @@
          }
      }
 
-}
-
-
-
-.select2-drop-active{
-    border-color: @event-orange;
-    box-shadow: 0px 1px 1px @event-orange;
-    transition: border-color 0.15s;
-    border-radius: 0px;
 }
