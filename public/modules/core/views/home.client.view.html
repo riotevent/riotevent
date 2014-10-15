@@ -5,12 +5,12 @@
         <a href="#!/events"><button><i class="fa fa-align-justify"></i> Events list</button></a>
         <a href="#!/events/create" data-ng-show="authentication.user"><button><i class="fa fa-plus-circle"></i> Create an event</button></a>
         <a href="#!/signup" data-ng-hide="authentication.user"><button ><i class="fa fa-level-up"></i> Sign up</button></a>
-        <div class="event-down">
+        <div class="event-down" ng-click="scrollToInfo()">
             <h2>Learn more</h2>
             <i class="fa fa-chevron-down"></i>
         </div>
 	</div>
-    <div class="container event-home-info">
+    <div id="event_home_info" class="container event-home-info">
         <div class="row">
             <div class="col-md-12">
                 <h1>Share events</h1>
