@@ -141,6 +141,12 @@ angular.module('events').directive('mapForm', function ($http) {
                     hostmap: {},
                     layers: {
                         baselayers: {
+
+                            mapbox: {
+                                name: 'MapBox',
+                                type: 'xyz',
+                                url: 'https://{s}.tiles.mapbox.com/v4/remigr.jol982fa/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoicmVtaWdyIiwiYSI6InB4U3paSGcifQ.L4qx28EnpGrtnzDVprytQQ#3'
+                            },
                             quest: {
                                 name: 'OpenMapQuest',
                                 type: 'xyz',
@@ -224,6 +230,11 @@ angular.module('events').directive('mapEventView', function ($http) {
                     hostmap: {},
                     layers: {
                         baselayers: {
+                            mapbox: {
+                                name: 'MapBox',
+                                type: 'xyz',
+                                url: 'https://{s}.tiles.mapbox.com/v4/remigr.jol982fa/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoicmVtaWdyIiwiYSI6InB4U3paSGcifQ.L4qx28EnpGrtnzDVprytQQ#3'
+                            },
                             quest: {
                                 name: 'OpenMapQuest',
                                 type: 'xyz',
