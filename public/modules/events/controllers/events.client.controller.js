@@ -1,6 +1,6 @@
 'use strict';
 
-// Events controller
+// Events controllerg
 angular.module('events').controller('EventsController', ['$scope', '$stateParams', '$location', '$http', '$window', '$q', 'Authentication', 'Events', 'EventCreate', 'Comments', 'Comment', '$upload', '$document',
  function ($scope, $stateParams, $location, $http, $window, $q, Authentication, Events, EventCreate, Comments, Comment, $upload, $document) {
         $scope.authentication = Authentication;
@@ -303,7 +303,7 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
      // Create new Comment
     $scope.createcomment = function () {
         var comment = new Comment({
-            text: $scope.newcomment.text.replace('\n', '<br/>'),
+            text: $scope.newcomment.text,
             category: $scope.newcomment.category.text,
             parent_comment: null,
             event: $scope.event._id
@@ -316,12 +316,25 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
             $scope.error = errorResponse.data.message;
         });
     };
+
+     // Update exisiting Comment
+     $scope.update_comment = function (comment) {
+         var getcomment = Comment.get({
+             id: comment._id
+         }, function() {
+             console.log(getcomment);
+             getcomment.text = comment.new_text;
+             getcomment.$update();
+             $scope.findComments();
+         });
+    };
+
      // Create new Answer
     $scope.createanswer = function (index, id) {
         console.log(id);
         console.log(index);
         var comment = new Comment({
-            text: $scope.newanswer[index].text.replace('\n', '<br/>'),
+            text: $scope.newanswer[index].text,
             category: null,
             parent_comment: id,
             event: $scope.event._id
@@ -329,7 +342,7 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
         // After save
         comment.$save(function (response) {
             $scope.findComments();
-            $scope.newcomment.text ="";
+            $scope.newanswer[index].text = "";
         }, function (errorResponse) {
             $scope.error = errorResponse.data.message;
         });

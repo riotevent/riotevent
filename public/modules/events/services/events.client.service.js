@@ -29,6 +29,10 @@ angular.module('events').factory('Comment', ['$resource',
  function ($resource) {
         return $resource('comments/:id', {
             id: '@_id'
+        }, {
+            update: {
+                method: 'PUT'
+            }
         });
  }
 ]);

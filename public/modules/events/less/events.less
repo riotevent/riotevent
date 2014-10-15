@@ -91,6 +91,11 @@
         margin: 0px;
     }
 
+     .event-buttons{
+         position: relative;
+         top: -50px;
+     }
+
      .event-category{
          clear: both;
          text-align: center;
@@ -248,6 +253,9 @@
              .comment-text{
                 color: @event-grey-dark;
              }
+             .edit-comment-form {
+                 margin-top: 10px;
+             }
          }
          .comment-content{
              padding-bottom: 5px;
@@ -258,6 +266,14 @@
              cursor: pointer;
              i{
                  padding-left: 5px;
+
+             }
+             i.yes{
+                 color: red;
+
+             }
+             i.no{
+                 color: green;
 
              }
              i:hover{

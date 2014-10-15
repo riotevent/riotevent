@@ -49,3 +49,9 @@ angular.module('events').filter('tagFilter', function () {
         return filtered;
     }
 });
+
+angular.module('events').filter('linebrk', function () {
+    return function(input) {
+        return input.replace(/\n/g, '<br>');
+    };
+});

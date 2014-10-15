@@ -1,23 +1,29 @@
 <section class="container" data-ng-controller="EventsController" data-ng-init="findOne()">
 	<div class="page-header">
-		<h1>{{event.title}}<br />
-            <span class="event-category" ng-if="event.event_tags.length !== 0"><span ng-repeat="tag in event.event_tags">#<span ng-bind="tag.text"></span> </span></span>
-            <a class="btn btn-danger" ng-show="confirm_remove" data-ng-click="remove();">
-                <i class="fa fa-trash"></i> Click here if you are sure you want to delete this event
-            </a>
-    	<div class="pull-right" data-ng-show="authentication.user._id == event.user._id">
+		<div>
+            <h1 class="">{{event.title}}</h1>
 
-            <a class="btn btn-primary" href="/#!/events/{{event.url}}/edit">
-                <i class="fa fa-pencil-square-o"></i>
-            </a>
-            <a class="btn btn-primary" ng-hide="sure_remove" data-ng-click="sure_remove = true">
-                <i class="fa fa-trash"></i>
-            </a>
-            <a class="btn btn-warning" ng-show="sure_remove && !confirm_remove" data-ng-click="confirm_remove = true">
-                <i class="fa fa-trash"></i> Sure ?
-            </a>
+            <div class="pull-right event-buttons" data-ng-show="authentication.user._id == event.user._id">
 
-        </div></h1>
+                <a class="btn btn-primary" href="/#!/events/{{event.url}}/edit">
+                    <i class="fa fa-pencil-square-o"></i>
+                </a>
+                <a class="btn btn-primary" ng-hide="sure_remove" data-ng-click="sure_remove = true">
+                    <i class="fa fa-trash"></i>
+                </a>
+                <span data-ng-show="sure_remove">
+                    Delete for sure ?
+                    <a class="btn btn-danger" data-ng-click="remove();">
+                        <i class="fa fa-trash"></i> Yes
+                    </a>
+                    <a class="btn btn-success" data-ng-click="sure_remove = false">
+                        <i class="fa fa-share-square"></i> No
+                    </a>
+                </span>
+            </div>
+        </div>
+        <div>
+        <span class="event-category" ng-if="event.event_tags.length !== 0"><span ng-repeat="tag in event.event_tags">#<span ng-bind="tag.text"></span> </span></span>
         <small>
             <em class="text-muted">
                 Posted on
@@ -26,6 +32,7 @@
                 <span data-ng-bind="event.user.displayName"></span>
             </em>
         </small>
+            </div>
 	</div>
     <div class="page-body">
         <div class="row">
@@ -73,22 +80,47 @@
                                 <span class="pull-right comment-edit">
                                     <i ng-show="authentication.user" ng-click="show_answer[$index] = true" class="fa fa-comment"></i>
 
-                                    <i ng-show="authentication.user._id == comment.user._id" class="fa fa-pencil-square-o"></i>
+                                    <i ng-click="comment.new_text = comment.text" ng-show="authentication.user._id == comment.user._id" class="fa fa-pencil-square-o"></i>
                                     <i ng-click="sure_remove_comment[{{$index}}] = true" ng-show="authentication.user._id == comment.user._id && !sure_remove_comment[{{$index}}]" class="fa fa-trash"></i>
-                                    <i ng-click="removeComment(comment)" ng-show="sure_remove_comment[{{$index}}] && authentication.user._id == comment.user._id" class="fa fa-trash"> Click on the cat to delete this comment</i>
+                                    <span ng-show="sure_remove_comment[{{$index}}] && authentication.user._id == comment.user._id">Delete for sure ? <i ng-click="removeComment(comment)"  class="fa fa-trash yes"> yes</i> <i ng-click="sure_remove_comment[{{$index}}] = false"  class="fa fa-share-square no"> no</i></span>
                                 </span>
                             </p>
-                        <p class="comment-text" data-ng-bind-html="comment.text"></p>
+                            <p ng-hide="comment.new_text != null" class="comment-text" data-ng-bind-html="comment.text | linebrk"></p>
+                            <form ng-show="comment.new_text != null" data-ng-submit="update_comment(comment)" class="edit-comment-form" novalidate>
+                                <textarea class="form-control" ng-model="comment.new_text" placeholder="Edit comment here"></textarea>
+                                <input type="submit" onclick="return false;" class="hidden">
+                                <div class="form-group row">
+                                    <div class="col-xs-6">
+                                        <button class="btn btn-default btn-submit">Submit</button>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <a class="btn btn-default btn-submit" ng-click="comment.new_text = null">Cancel</a>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                         <div class="comment-answers">
-                            <div ng-repeat="answer in comment.answers"class="comment-answer">
+                            <div ng-repeat="answer in comment.answers" class="comment-answer">
                                 <p><i class="fa fa-share"></i> <span ng-bind="answer.user.displayName"></span> answered on <span data-ng-bind="answer.created | date:'medium'"></span>
                                     <span class="comment-edit">
-                                        <i ng-show="authentication.user._id == answer.user._id" class="fa fa-pencil-square-o"></i>
-                                        <i ng-click="removeComment(answer)" ng-show="authentication.user._id == answer.user._id" class="fa fa-trash"></i>
+                                        <i ng-click="answer.new_text = answer.text" ng-show="authentication.user._id == answer.user._id" class="fa fa-pencil-square-o"></i>
+                                        <i ng-click="sure_remove_ansewr[{{$index}}] = true" ng-show="authentication.user._id == answer.user._id && !sure_remove_ansewr[{{$index}}]" class="fa fa-trash"></i>
+                                    <span ng-show="sure_remove_ansewr[{{$index}}] && authentication.user._id == answer.user._id">Delete for sure ? <i ng-click="removeComment(answer)"  class="fa fa-trash yes"> yes</i> <i ng-click="sure_remove_ansewr[{{$index}}] = false"  class="fa fa-share-square no"> no</i></span>
                                     </span>
                                 </p>
-                                <p class="comment-text" data-ng-bind-html="answer.text"></p>
+                                <p ng-hide="answer.new_text != null" class="comment-text" data-ng-bind-html="answer.text | linebrk"></p>
+                                <form ng-show="answer.new_text != null" data-ng-submit="update_comment(answer)" class="edit-comment-form" novalidate>
+                                    <textarea class="form-control" ng-model="answer.new_text" placeholder="Edit comment here"></textarea>
+                                    <input type="submit" onclick="return false;" class="hidden">
+                                    <div class="form-group row">
+                                        <div class="col-xs-6">
+                                            <button class="btn btn-default btn-submit">Submit</button>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <a class="btn btn-default btn-submit" ng-click="answer.new_text = null">Cancel</a>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                             <div class="row comment-answer-form" ng-show="show_answer[$index]">
 
