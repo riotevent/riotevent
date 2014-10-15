@@ -27,8 +27,4 @@ angular.module('users').config(['$httpProvider',
 			}
 		]);
 	}
-<<<<<<< HEAD
 ]);
-=======
-]);
->>>>>>> meanjs
