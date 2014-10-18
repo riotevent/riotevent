@@ -1,10 +1,9 @@
 'use strict';
 
 // Events controller
-angular.module('events').controller('EventsController', ['$scope', '$stateParams', '$location', '$http', '$window', '$q', 'Authentication', 'Events', 'EventCreate', 'Comments', 'Comment', '$upload', '$document', '$locale', 'tmhDynamicLocale',
- function ($scope, $stateParams, $location, $http, $window, $q, Authentication, Events, EventCreate, Comments, Comment, $upload, $document, $locale, tmhDynamicLocale) {
+angular.module('events').controller('EventsController', ['$scope', '$stateParams', '$location', '$http', '$window', '$q', 'Authentication', 'Events', 'EventCreate', 'Comments', 'Comment', '$upload', '$document',
+ function ($scope, $stateParams, $location, $http, $window, $q, Authentication, Events, EventCreate, Comments, Comment, $upload, $document) {
         $scope.authentication = Authentication;
-        tmhDynamicLocale.set('fr');
 
         $window.scrollTo(0, 0);
 

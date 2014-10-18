@@ -39,6 +39,8 @@ module.exports = {
                 'public/lib/ng-file-upload/angular-file-upload.js',
                 'public/lib/angular-scroll/angular-scroll.js',
                 'public/lib/angular-translate/angular-translate.js',
+                'public/lib/angular-translate-storage-cookie/angular-translate-storage-cookie.js',
+                'public/lib/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
                 'public/lib/angular-dynamic-locale/src/tmhDynamicLocale.js',
                 'public/lib/ngLocale/angular-locale_fr-fr.js',
                 'public/lib/ngLocale/angular-locale_en-gb.js',
