@@ -21,6 +21,7 @@ angular.module('events').filter('eventSort', function () {
         futur = futur.sort();
         futur = futur.reverse();
         past = past.sort();
+        past = past.reverse();
         return futur.concat(past).concat(no_date);
     }
 });
