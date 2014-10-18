@@ -1,12 +1,12 @@
 <section class="" data-ng-controller="HomeController">
 	<div class="text-center event-home">
         <img class="img-responsive" src="modules/core/img/logo/riotevent.png"  />
-        <h1>Independant Event Platform</h1>
-        <a href="#!/events"><button><i class="fa fa-align-justify"></i> Events list</button></a>
-        <a href="#!/events/create" data-ng-show="authentication.user"><button><i class="fa fa-plus-circle"></i> Create an event</button></a>
-        <a href="#!/signup" data-ng-hide="authentication.user"><button ><i class="fa fa-level-up"></i> Sign up</button></a>
+        <h1>{{'INDE_EVENT_PLATFORM' | translate}}</h1>
+        <a href="#!/events"><button><i class="fa fa-align-justify"></i> {{'EVENTS_LIST' | translate}}</button></a>
+        <a href="#!/events/create" data-ng-show="authentication.user"><button><i class="fa fa-plus-circle"></i> {{'CREATE_EVENT' | translate}}</button></a>
+        <a href="#!/signup" data-ng-hide="authentication.user"><button ><i class="fa fa-level-up"></i> {{'SIGNUP' | translate}}</button></a>
         <div class="event-down" ng-click="scrollToInfo()">
-            <h2>Learn more</h2>
+            <h2>{{'LEARN_MORE' | translate}}</h2>
             <i class="fa fa-chevron-down"></i>
         </div>
 	</div>

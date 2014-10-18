@@ -1,15 +1,16 @@
 'use strict';
 
 
-angular.module('events').directive('nextDays', function () {
+angular.module('events').directive('nextDays', ['$translate', function ($translate) {
     return {
         restrict: 'E',
+        translude: true,
         template: '{{nextdate}}',
         scope: {
             date: '=date',
             today: '=today'
         },
-        link: function ($scope, element, attributes) {
+        link: function ($scope) {
 
 
             if($scope.date !== null) {
@@ -18,43 +19,70 @@ angular.module('events').directive('nextDays', function () {
                 var difference = (date - $scope.today)/86400000+1;
 
                 if(difference > 0 && difference <= 1) {
-                    $scope.nextdate = 'Today';
+                    $translate('TODAY').then(function (nextdate) {
+                        $scope.nextdate = nextdate;
+                    });
                 }
                 else if(difference > 1  && difference <= 2) {
-                    $scope.nextdate = 'Tomorrow';
+                    $translate('TOMORROW').then(function (nextdate) {
+                        $scope.nextdate = nextdate;
+                    });
                 }
                 else if(difference > 2 && difference <= 30){
-                    $scope.nextdate = 'In ' + parseInt(difference) + ' days';
+                    $translate('IN_X_DAYS', { days: parseInt(difference)}).then(function (nextdate) {
+                        $scope.nextdate = nextdate;
+                    });
                 }
                 else if(difference > 30 && difference <= 60) {
-                    $scope.nextdate = 'In one month';
+                    $translate('IN_ONE_MONTH').then(function (nextdate) {
+                        $scope.nextdate = nextdate;
+                    });
                 }
                 else if(difference > 60 && difference <= 365) {
-                    $scope.nextdate = 'In ' + parseInt(difference/30) + ' months';
+                    $translate('IN_X_MONTHS', { days: parseInt(difference/30)}).then(function (nextdate) {
+                        $scope.nextdate = nextdate;
+                    });
                 }
                 else if(difference > 365 && difference <= 730) {
-                    $scope.nextdate = 'In one year';
+                    $translate('IN_ONE_YEAR').then(function (nextdate) {
+                        $scope.nextdate = nextdate;
+                    });
                 }
                 else if(difference > 730) {
-                    $scope.nextdate = 'In ' + parseInt(difference/365) + ' years';
+                    $translate('IN_X_YEARS', { days: parseInt(difference/365)}).then(function (nextdate) {
+                        $scope.nextdate = nextdate;
+                    });
                 }
                 else if(difference > -1 && difference <= 0) {
-                    $scope.nextdate = 'Yesterday';
+                    $translate('YESTERDAY').then(function (nextdate) {
+                        $scope.nextdate = nextdate;
+                    });
                 }
                 else if(difference > -30 && difference <= -1) {
-                    $scope.nextdate = Math.abs(parseInt(difference)-1) + ' days ago';
+                    $translate('X_DAYS_AGO', { days:  Math.abs(parseInt(difference)-1)}).then(function (nextdate) {
+                        $scope.nextdate = nextdate;
+                    });
                 }
                 else if(difference > -60 && difference <= -30) {
-                    $scope.nextdate = 'One month ago';
+                    $translate('ONE_MONTH_AGO').then(function (nextdate) {
+                        $scope.nextdate = nextdate;
+                    });
                 }
                 else if(difference > -365 && difference <= -60) {
-                    $scope.nextdate = Math.abs(parseInt((difference-1)/30)) + ' months ago';
+                    $translate('X_MONTHS_AGO', { days:  Math.abs(parseInt((difference-1)/30))}).then(function (nextdate) {
+                        $scope.nextdate = nextdate;
+                    });
                 }
                 else if(difference > -730 && difference <= -365) {
-                    $scope.nextdate = 'One year ago';
+                    $translate('ONE_YEAR_AGO').then(function (nextdate) {
+                        $scope.nextdate = nextdate;
+                    });
                 }
                 else if(difference < -730) {
                     $scope.nextdate = Math.abs(parseInt((difference-1)/365)) + ' years ago';
+                    $translate('X_YEARS_AGO', { days:  Math.abs(parseInt((difference-1)/365))}).then(function (nextdate) {
+                        $scope.nextdate = nextdate;
+                    });
                 }
             }
             else {
@@ -63,12 +91,13 @@ angular.module('events').directive('nextDays', function () {
             return difference;
         }
     };
-});
+}]);
+
 angular.module('events').directive('eventDatepicker', function () {
     return {
         restrict: 'E',
         templateUrl: 'modules/events/views/datepicker-directive-view.html',
-        link: function ($scope, element, attributes) {
+        controller: function ($scope) {
             $scope.today = function () {
                 $scope.date_input = new Date();
             };
@@ -230,6 +259,7 @@ angular.module('events').directive('mapEventView', function ($http) {
                     hostmap: {},
                     layers: {
                         baselayers: {
+
                             mapbox: {
                                 name: 'MapBox',
                                 type: 'xyz',
@@ -258,6 +288,7 @@ angular.module('events').directive('mapEventView', function ($http) {
                         }
                     }
                 });
+
             }
         }
     };

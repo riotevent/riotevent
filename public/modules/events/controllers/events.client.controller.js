@@ -1,9 +1,10 @@
 'use strict';
 
-// Events controllerg
-angular.module('events').controller('EventsController', ['$scope', '$stateParams', '$location', '$http', '$window', '$q', 'Authentication', 'Events', 'EventCreate', 'Comments', 'Comment', '$upload', '$document',
- function ($scope, $stateParams, $location, $http, $window, $q, Authentication, Events, EventCreate, Comments, Comment, $upload, $document) {
+// Events controller
+angular.module('events').controller('EventsController', ['$scope', '$stateParams', '$location', '$http', '$window', '$q', 'Authentication', 'Events', 'EventCreate', 'Comments', 'Comment', '$upload', '$document', '$locale', 'tmhDynamicLocale',
+ function ($scope, $stateParams, $location, $http, $window, $q, Authentication, Events, EventCreate, Comments, Comment, $upload, $document, $locale, tmhDynamicLocale) {
         $scope.authentication = Authentication;
+        tmhDynamicLocale.set('fr');
 
         $window.scrollTo(0, 0);
 
@@ -186,6 +187,7 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
                     $scope.event.map_bounding_box[2] = $scope.bounds.southWest.lng;
                     $scope.event.map_bounding_box[3] = $scope.bounds.northEast.lng;
                 }
+                $scope.event.updated = new Date();
                 console.log($scope.event);
                 event.$update(function () {
                     $location.path('events/' + event.url);
@@ -251,12 +253,13 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
 
         // Find existing Event
         $scope.findOne = function () {
+            $scope.show_map = true;
             $scope.event = Events.get({
                 url: $stateParams.url
             }, function() {
                 console.log($scope.event);
                 //Initialize the map
-                if($scope.event.location_latitude !=- null) {
+                if($scope.event.location_latitude !== null) {
                     $scope.markers.marker = {};
                     $scope.markers.marker.lat = $scope.event.location_latitude;
                     $scope.markers.marker.lng = $scope.event.location_longitude;
@@ -269,6 +272,9 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
                     $scope.bounds.northEast.lat = $scope.event.map_bounding_box[1];
                     $scope.bounds.southWest.lng = $scope.event.map_bounding_box[2];
                     $scope.bounds.northEast.lng = $scope.event.map_bounding_box[3];
+                }
+                else {
+                    $scope.show_map = false;
                 }
                 //Set number of info columns
                 if(!$location.path().replace($stateParams.url,'').contains('edit')) {
@@ -324,6 +330,7 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
          }, function() {
              console.log(getcomment);
              getcomment.text = comment.new_text;
+             getcomment.updated = new Date();
              getcomment.$update();
              $scope.findComments();
          });

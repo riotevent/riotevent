@@ -20,6 +20,9 @@
     "angular-leaflet-directive": "latest",
     "ng-file-upload": "latest",
     "ng-tags-input": "~2.1.1",
-    "angular-scroll": "~0.6.2"
+    "angular-scroll": "~0.6.2",
+    "angular-translate": "~2.4.1",
+    "ngLocale": "*",
+    "angular-dynamic-locale": "~0.1.21"
   }
 }

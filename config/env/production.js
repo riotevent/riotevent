@@ -9,7 +9,7 @@ module.exports = {
 				'public/lib/bootstrap/dist/css/bootstrap-theme.min.css',
 				'public/lib/font-awesome/css/font-awesome.min.css',
 				'public/lib/leaflet-dist/leaflet.css',
-				'public/lib/select2/select2.css'
+				'public/lib/ng-tags-input/ng-tags-input.min.css'
 			],
 			js: [
 				'public/lib/jquery/dist/jquery.min.js',
@@ -28,7 +28,12 @@ module.exports = {
 				'public/lib/angular-leaflet-directive/dist/angular-leaflet-directive.min.js',
 				'public/lib/select2/select2.min.js',
 				'public/lib/angular-ui-select2/src/select2.min.js',
-                'public/lib/ng-file-upload/angular-file-upload.min.js'
+                'public/lib/ng-file-upload/angular-file-upload.min.js',
+                'public/lib/angular-scroll/angular-scroll.min.js',
+                'public/lib/angular-translate/angular-translate.min.js',
+                'public/lib/angular-dynamic-locale/tmhDynamicLocale.min.js',
+                'public/lib/ngLocale/angular-locale_fr-fr.min.js',
+                'public/lib/ngLocale/angular-locale_en-gb.min.js'
 			]
 		},
 		css: 'public/dist/application.min.css',

@@ -37,7 +37,11 @@ module.exports = {
 				'public/lib/angular-leaflet-directive/dist/angular-leaflet-directive.js',
 				'public/lib/ng-tags-input/ng-tags-input.js',
                 'public/lib/ng-file-upload/angular-file-upload.js',
-                'public/lib/angular-scroll/angular-scroll.js'
+                'public/lib/angular-scroll/angular-scroll.js',
+                'public/lib/angular-translate/angular-translate.js',
+                'public/lib/angular-dynamic-locale/src/tmhDynamicLocale.js',
+                'public/lib/ngLocale/angular-locale_fr-fr.js',
+                'public/lib/ngLocale/angular-locale_en-gb.js',
 			]
 		},
 		css: [
@@ -49,6 +53,7 @@ module.exports = {
 		js: [
 			'public/config.js',
 			'public/application.js',
+			'public/translate/translate.js',
 			'public/modules/*/*.js',
 			'public/modules/*/*[!tests]*/*.js'
 		],
