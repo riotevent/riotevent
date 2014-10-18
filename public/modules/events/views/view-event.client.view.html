@@ -23,16 +23,19 @@
             </div>
         </div>
         <div>
-        <span class="event-category" ng-if="event.event_tags.length !== 0"><span ng-repeat="tag in event.event_tags">#<span ng-bind="tag.text"></span> </span></span>
-        <small>
+
+            <small>
             <em class="text-muted">
                 Posted on
                 <span data-ng-bind="event.created | date:'mediumDate'"></span>
                 by
                 <span data-ng-bind="event.user.displayName"></span>
             </em>
-        </small>
-            </div>
+            </small>
+        </div>
+            <br />
+            <span class="event-category" ng-if="event.event_tags.length !== 0"><span ng-repeat="tag in event.event_tags">#<span ng-bind="tag.text"></span> </span></span>
+
 	</div>
     <div class="page-body">
         <div class="row">
@@ -61,7 +64,7 @@
         <div class="row event-description" ng-if="event.description != ''">
             <div class="col-md-12" ng-bind-html="event.description"></div>
         </div>
-        <div class="row" ng-show="event.location_latitude != null">
+        <div class="row" ng-show="show_map">
             <div class="col-md-12">
                 <map-event-view ></map-event-view>
             </div>
