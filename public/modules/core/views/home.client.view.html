@@ -5,10 +5,12 @@
         <a href="#!/events"><button><i class="fa fa-align-justify"></i> {{'EVENTS_LIST' | translate}}</button></a>
         <a href="#!/events/create" data-ng-show="authentication.user"><button><i class="fa fa-plus-circle"></i> {{'CREATE_EVENT' | translate}}</button></a>
         <a href="#!/signup" data-ng-hide="authentication.user"><button ><i class="fa fa-level-up"></i> {{'SIGNUP' | translate}}</button></a>
-        <div class="event-down" ng-click="scrollToInfo()">
-            <h2>{{'LEARN_MORE' | translate}}</h2>
-            <i class="fa fa-chevron-down"></i>
-        </div>
+        <span href="#event_home_info" du-smooth-scroll duration="800"  offset="80">
+            <div class="event-down">
+                <h2>{{'LEARN_MORE' | translate}}</h2>
+                <i class="fa fa-chevron-down"></i>
+            </div>
+        </span>
 	</div>
     <div id="event_home_info" class="container event-home-info">
         <div class="row">
