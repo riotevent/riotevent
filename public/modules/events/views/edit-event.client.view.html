@@ -1,22 +1,22 @@
 <section class="section-create-event container" data-ng-controller="EventsController" data-ng-init="findOne()">
 	<div class="page-header">
-		<h1>Edit Event</h1>
+		<h1>{{NEW_EVENT | translate}}</h1>
 	</div>
 	<div class="row">
 		<div class="col-md-12">
 			<form class="form-horizontal form-event-creation" data-ng-submit="update()" novalidate>
 				<fieldset>
-					<h2><i class="fa fa-tags"></i> General Info</h2>
+					<h2><i class="fa fa-info"></i> {{'GENERAL_INFO' | translate}}</h2>
                     <div class="form-group">
                         <div class="controls">
-                            <input type="text" data-ng-model="event.title" id="title" name="title" class="form-control big-input" placeholder="Enter the title of your event" required>
+                            <input type="text" data-ng-model="event.title" id="title" name="title" class="form-control big-input" placeholder="{{'ENTER_TITLE' | translate}}" required>
                         </div>
                     </div>
 					<event-datepicker></event-datepicker>
 
 					<div class="form-group" ng-show="true">
 						<div class="controls">
-							<input type="text" data-ng-model="event.time_description" id="time" class="form-control big-input" placeholder="Enter time of the event (ex : from 4pm. to midnight)">
+							<input type="text" data-ng-model="event.time_description" id="time" class="form-control big-input" placeholder="{{'ENTER_TIME' | translate}}">
 						</div>
 					</div>
 
@@ -30,41 +30,41 @@
 						<p class="input-group">
 							<span class="input-group-btn">
 								<button type="button" class="btn btn-default big-input btn-fake">
-									Add a picture for the event
+									{{'ADD_A_PICTURE' | translate}}
 								</button>
 							</span>
-							<input type="file" ng-file-select="onFileSelect($files)" id="image" class="form-control big-input" placeholder="Add a picture for the event">
+							<input type="file" ng-file-select="onFileSelect($files)" id="image" class="form-control big-input" placeholder="{{'ADD_A_PICTURE' | translate}}">
 						</p>
 					</div>
 
-                    <h2><i class="fa fa-tags "></i> Event Tags</h2>
+                    <h2><i class="fa fa-tags "></i> {{'EVENT_TAGS' | translate}}</h2>
 					<div class="form-group">
-						<tags-input ng-model="event.event_tags" replace-spaces-with-dashes="false" placeholder="Add a tag">
+						<tags-input ng-model="event.event_tags" replace-spaces-with-dashes="false" placeholder="{{'ADD_A_TAG' | translate}}">
                         </tags-input>
-						<p class="help-block">You can add tags to your event.</p>
+						<p class="help-block">{{'ADD_TAGS' | translate}}</p>
 					</div>
 
-					<h2><i class="fa fa-paragraph"></i> Description</h2>
+					<h2><i class="fa fa-paragraph"></i> {{'DESCRIPTION' | translate}}</h2>
 					<div class="form-group">
 						<div class="controls">
 							<div text-angular data-ng-model="event.description" ta-toolbar="[['h1','h2','h3', 'h4', 'p'],['bold','italics', 'ul', 'ol', 'undo', 'redo']]"></div>
 						</div>
 					</div>
 
-                    <h2><i class="fa fa-comments "></i> Discussion Categories</h2>
+                    <h2><i class="fa fa-comments "></i> {{'COMMENTS_CATEGORY' | translate}}</h2>
 					<div class="form-group">
-						<tags-input ng-model="event.comment_cats" replace-spaces-with-dashes="false" placeholder="Add a category">
+						<tags-input ng-model="event.comment_cats" replace-spaces-with-dashes="false" placeholder="{{'ADD_A_CATEGORY' | translate}}">
                             <auto-complete source="loadTags($query)" min-length="0" load-on-focus="true" load-on-empty="true"></auto-complete>
                         </tags-input>
-						<p class="help-block">You can select here the comments categories.</p>
+						<p class="help-block">{{'SELECT_COMMENTS_CATEGORY' | translate}}.</p>
 					</div>
 
-					<h2><i class="fa fa-globe"></i> Location</h2>
+					<h2><i class="fa fa-globe"></i> {{'LOCATION' | translate}}</h2>
 					<map-form></map-form>
 
 					<input type="submit" onclick="return false;" class="hidden">
 					<div class="form-group">
-						<button class="btn btn-default btn-submit">Submit</button>
+						<button class="btn btn-default btn-submit">{{'SUBMIT' | translate}}</button>
 					</div>
 
 					<div data-ng-show="error" class="text-danger">

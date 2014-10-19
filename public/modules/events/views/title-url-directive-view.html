@@ -1,6 +1,6 @@
 <div class="form-group">
 	<div class="controls">
-		<input type="text" data-ng-model="event.title" id="title" name="title" class="form-control big-input" placeholder="Enter the title of your event" ng-change="fill_address()" required>
+		<input type="text" data-ng-model="event.title" id="title" name="title" class="form-control big-input" placeholder="{{'ENTER_TITLE' | translate}}" ng-change="fill_address()" required>
 	</div>
 </div>
 
@@ -14,7 +14,7 @@
 			<span class="input-group-btn">
 				<button type="button" class="btn btn-default little-input btn-fake" ng-bind="event_path"></button>
 			</span>
-			<input type="text" data-ng-model="event.url" id="url" class="form-control little-input" placeholder="Web address of the event" ng-disabled="lock_input" required>
+			<input type="text" data-ng-model="event.url" id="url" class="form-control little-input" placeholder="{{'ENTER_URL' | translate}}" ng-disabled="lock_input" required>
 		</p>
 	</div>
 </div>

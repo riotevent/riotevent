@@ -10,7 +10,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$transla
             prefix: 'translate/locales/locale-',
             suffix: '.json'
         });
-
+        $translateProvider.registerAvailableLanguageKeys(['en', 'fr']);
         $translateProvider.determinePreferredLanguage();
         $translateProvider.fallbackLanguage('en');
 

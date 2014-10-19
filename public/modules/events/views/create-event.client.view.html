@@ -1,18 +1,18 @@
 <section class="section-create-event container" data-ng-controller="EventsController">
 	<div class="page-header">
-		<h1>New Event</h1>
+		<h1>{{'NEW_EVENT' | translate}}</h1>
 	</div>
 	<div class="row">
 		<div class="col-md-12">
 			<form class="form-horizontal form-event-creation" data-ng-submit="create()" novalidate>
 				<fieldset>
-					<h2><i class="fa fa-info"></i> General Info</h2>
+					<h2><i class="fa fa-info"></i> {{'GENERAL_INFO' | translate}}</h2>
 					<event-title-url></event-title-url>
 					<event-datepicker></event-datepicker>
 
 					<div class="form-group" ng-show="true">
 						<div class="controls">
-							<input type="text" data-ng-model="event.time_description" id="time" class="form-control big-input" placeholder="Enter time of the event (ex : from 4pm. to midnight)" required>
+							<input type="text" data-ng-model="event.time_description" id="time" class="form-control big-input" placeholder="{{'ENTER_TIME' | translate}}" required>
 						</div>
 					</div>
 
@@ -26,48 +26,48 @@
 						<p class="input-group">
 							<span class="input-group-btn">
 								<button type="button" class="btn btn-default big-input btn-fake">
-									Add a picture for the event
+                                    {{'ADD_A_PICTURE' | translate}}
 								</button>
 							</span>
-							<input type="file" ng-file-select="onFileSelect($files)" id="image" class="form-control big-input" placeholder="Add a picture for the event" required>
+							<input type="file" ng-file-select="onFileSelect($files)" id="image" class="form-control big-input" placeholder="{{'ADD_A_PICTURE' | translate}}" required>
 						</p>
 					</div>
 
-                    <h2><i class="fa fa-tags "></i> Event Tags</h2>
+                    <h2><i class="fa fa-tags "></i> {{'EVENT_TAGS' | translate}}</h2>
 					<div class="form-group">
 
-                        <tags-input ng-model="event.event_tags" replace-spaces-with-dashes="false" placeholder="Add a tag">
+                        <tags-input ng-model="event.event_tags" replace-spaces-with-dashes="false" placeholder="{{'ADD_A_TAG' | translate}}">
                         </tags-input>
-						<p class="help-block">You can add tags to your event.</p>
+						<p class="help-block">{{'ADD_TAGS' | translate}}</p>
 					</div>
 
-					<h2><i class="fa fa-paragraph"></i> Description</h2>
+					<h2><i class="fa fa-paragraph"></i> {{'DESCRIPTION' | translate}}</h2>
 					<div class="form-group">
 						<div class="controls">
 							<div text-angular data-ng-model="event.description" ta-toolbar="[['h1','h2','h3', 'h4', 'p'],['bold','italics', 'ul', 'ol', 'undo', 'redo']]"></div>
 						</div>
 					</div>
 
-                    <h2><i class="fa fa-comments "></i> Discussion Categories</h2>
+                    <h2><i class="fa fa-comments "></i> {{'COMMENTS_CATEGORY' | translate}}</h2>
 					<div class="form-group">
-						<tags-input ng-model="event.comment_cats" replace-spaces-with-dashes="false" placeholder="Add a category">
+						<tags-input ng-model="event.comment_cats" replace-spaces-with-dashes="false" placeholder="{{'ADD_A_CATEGORY' | translate}}">
                             <auto-complete source="loadCats($query)" min-length="0" load-on-focus="true" load-on-empty="true"></auto-complete>
                         </tags-input>
-						<p class="help-block">You can select here the comments categories.</p>
+						<p class="help-block">{{'SELECT_COMMENTS_CATEGORY' | translate}}.</p>
 					</div>
 
-					<h2><i class="fa fa-lock "></i> Lock Event ? </h2>
+					<h2><i class="fa fa-lock "></i> {{'LOCK_EVENT' | translate}}</h2>
 					<div class="form-group">
-						<input type="text" data-ng-model="event.pass" id="pass" class="form-control big-input" placeholder="Enter a password if you want to protect your event, only people who know it will have acces to it.">
-						<p class="help-block">Fill this only if you want to create a private event.</p>
+						<input type="text" data-ng-model="event.pass" id="pass" class="form-control big-input" placeholder="{{'ENTER_PASSWORD_PROTECT_EVENT' | translate}}">
+						<p class="help-block">{{'FILL_PASSWORD_EVENT' | translate}}</p>
 					</div>
 
-					<h2><i class="fa fa-globe"></i> Location</h2>
+					<h2><i class="fa fa-globe"></i> {{'LOCATION' | translate}}</h2>
 					<map-form></map-form>
 
 					<input type="submit" onclick="return false;" class="hidden">
 					<div class="form-group">
-						<button class="btn btn-default btn-submit">Submit</button>
+						<button class="btn btn-default btn-submit">{{'SUBMIT' | translate}}</button>
 					</div>
 
 					<div data-ng-show="error" class="text-danger">
