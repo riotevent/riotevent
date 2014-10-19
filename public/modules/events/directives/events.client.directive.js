@@ -148,6 +148,47 @@ angular.module('events').directive('eventTitleUrl', function ($filter, $location
     };
 });
 
+
+angular.module('events').directive('eventComments', function ($filter, $location) {
+    return {
+        restrict: 'E',
+        templateUrl: 'modules/events/views/event-comment-directive-view.html',
+        controller: function ($scope) {
+
+            $scope.comment_panel_cat_nb = function (cat) {
+                for(var i = 0; i < $scope.event.comment_cats.length && $scope.event.comment_cats[i].text != cat; i++){}
+                return i;
+            };
+
+            $scope.comment_cats_class_show = function(id) {
+                if($scope.event.comment_cats_disable[id].show == true)
+                    return "comment-cat-disable";
+                else
+                    return "";
+            };
+
+            $scope.comment_cats_class_new = function(id) {
+                if($scope.event.comment_cats_disable[id].new == true)
+                    return "comment-cat-disable";
+                else
+                    return "";
+            };
+            $scope.comment_cats_disable_new = function(id) {
+                angular.forEach($scope.event.comment_cats_disable, function (val, key) {
+                    if(key !== id) $scope.event.comment_cats_disable[key].new = true;
+                    else $scope.event.comment_cats_disable[key].new = false;
+                });
+                $scope.newcomment.category = $scope.event.comment_cats[id];
+            };
+
+            $scope.link_comment = function (id) {
+                $location.hash(id);
+                $scope.scrollToComment(id);
+            }
+        }
+    };
+});
+
 angular.module('events').directive('mapForm', function ($http) {
     return {
         restrict: 'E',

@@ -1,8 +1,8 @@
 'use strict';
 
 // Events controller
-angular.module('events').controller('EventsController', ['$scope', '$stateParams', '$location', '$http', '$window', '$q', 'Authentication', 'Events', 'EventCreate', 'Comments', 'Comment', '$upload', '$document',
- function ($scope, $stateParams, $location, $http, $window, $q, Authentication, Events, EventCreate, Comments, Comment, $upload, $document) {
+angular.module('events').controller('EventsController', ['$scope', '$stateParams', '$location', '$http', '$window', '$q', 'Authentication', 'Events', 'EventCreate', 'Comments', 'Comment', '$upload', '$document', '$state',
+ function ($scope, $stateParams, $location, $http, $window, $q, Authentication, Events, EventCreate, Comments, Comment, $upload, $document, $state) {
         $scope.authentication = Authentication;
 
         $window.scrollTo(0, 0);
@@ -16,7 +16,7 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
                     element = element.offsetParent;
                 }
                 console.log(position);
-                $window.scrollTo(0, position-15);
+                $window.scrollTo(0, position-90);
             }
             else {
                 console.error("Comment '" + id + "' does not exist");
@@ -67,32 +67,6 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
 
         $scope.today = new Date();
         $scope.today = +$scope.today
-
-        $scope.comment_panel_cat_nb = function (cat) {
-            for(var i = 0; i < $scope.event.comment_cats.length && $scope.event.comment_cats[i].text != cat; i++){}
-            return i;
-        };
-
-        $scope.comment_cats_class_show = function(id) {
-            if($scope.event.comment_cats_disable[id].show == true)
-                return "comment-cat-disable";
-            else
-                return "";
-        };
-
-        $scope.comment_cats_class_new = function(id) {
-            if($scope.event.comment_cats_disable[id].new == true)
-                return "comment-cat-disable";
-            else
-                return "";
-        };
-        $scope.comment_cats_disable_new = function(id) {
-            angular.forEach($scope.event.comment_cats_disable, function (val, key) {
-                if(key !== id) $scope.event.comment_cats_disable[key].new = true;
-                else $scope.event.comment_cats_disable[key].new = false;
-            });
-            $scope.newcomment.category = $scope.event.comment_cats[id];
-        };
 
         $scope.open_image = function() {
            window.open('/uploaded/files/' + $scope.event.image, '_blank');
@@ -263,7 +237,7 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
                     $scope.markers.marker.lat = $scope.event.location_latitude;
                     $scope.markers.marker.lng = $scope.event.location_longitude;
                     $scope.markers.marker.focus = true;
-                    if($location.path().replace($stateParams.url,'').contains('edit')) {
+                    if($state.current.name == 'editEvent') {
                         $scope.markers.marker.draggable = true;
                     }
                     console.log($scope.event.map_bounding_box);
@@ -276,7 +250,7 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
                     $scope.show_map = false;
                 }
                 //Set number of info columns
-                if(!$location.path().replace($stateParams.url,'').contains('edit')) {
+                if($state.current.name == 'viewEvent') {
                     $scope.event_info_col = 0;
                     if($scope.event.time_description){
                         $scope.event_info_col++;
@@ -293,6 +267,7 @@ angular.module('events').controller('EventsController', ['$scope', '$stateParams
                 $scope.image_url = "uploaded/files/" + $scope.event.image + "?dim=1140x400";
                 console.log($scope.image_url);
                 //Set the buttons for comment categories functionalities
+                console.log($scope.event.comment_cats);
                 $scope.event.comment_cats_disable = [];
                 angular.forEach($scope.event.comment_cats, function(value, key) {
                     $scope.event.comment_cats_disable[key] = {};

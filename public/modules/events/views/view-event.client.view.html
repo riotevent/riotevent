@@ -12,12 +12,12 @@
                     <i class="fa fa-trash"></i>
                 </a>
                 <span data-ng-show="sure_remove">
-                    Delete for sure ?
+                    {{'DELETE_FOR_SURE' | translate}}
                     <a class="btn btn-danger" data-ng-click="remove();">
-                        <i class="fa fa-trash"></i> Yes
+                        <i class="fa fa-trash"></i> {{'YES' | translate}}
                     </a>
                     <a class="btn btn-success" data-ng-click="sure_remove = false">
-                        <i class="fa fa-share-square"></i> No
+                        <i class="fa fa-share-square"></i> {{'No' | translate}}
                     </a>
                 </span>
             </div>
@@ -26,10 +26,15 @@
 
             <small>
             <em class="text-muted">
-                Posted on
+                {{'POSTED_ON' | translate}}
                 <span data-ng-bind="event.created | date:'mediumDate'"></span>
-                by
+                {{'BY' | translate}}
                 <span data-ng-bind="event.user.displayName"></span>
+            </em>
+                <br />
+            <em class="text-muted" ng-if="event.created != event.updated">
+                {{'EDITED_ON' | translate}}
+                <span data-ng-bind="event.updated | date:'mediumDate'"></span>
             </em>
             </small>
         </div>
@@ -49,7 +54,9 @@
         <div class="row panel row-event-info" ng-if="event_info_col < 12">
             <div class="col-md-{{event_info_col}} col-event-info" ng-if="event.start_datetime != null || event.end_datetime != null">
                 <i class="fa fa-calendar"></i>
-                <p><span ng-if="event.start_datetime != null">Starting <span ng-bind="event.start_datetime | date:'longDate'"></span></span><span ng-if="event.end_datetime != null"> until <span ng-bind="event.end_datetime | date:'longDate'"></span></span></p>
+                <p><span ng-if="event.start_datetime != null">{{'STARTING' | translate}}
+ <span ng-bind="event.start_datetime | date:'longDate'"></span></span><span ng-if="event.end_datetime != null"> {{'UNTIL' | translate}}
+ <span ng-bind="event.end_datetime | date:'longDate'"></span></span></p>
             </div>
             <div class="col-md-{{event_info_col}} col-event-info" ng-if="event.time_description != ''">
                 <i class="fa fa-clock-o"></i>
@@ -69,92 +76,6 @@
                 <map-event-view ></map-event-view>
             </div>
         </div>
-        <div class="row comments">
-            <div class="col-md-12">
-                <h2 class="comments-title">Comments<span ng-repeat="category in event.comment_cats"> <span class="{{comment_cats_class_show($index)}} comment-cat comment-cat-{{$index}}" ng-bind="category.text" ng-click="event.comment_cats_disable[$index].show = !event.comment_cats_disable[$index].show"></span></span></h2>
-                <div ng-repeat="comment in comments" ng-hide="event.comment_cats_disable[{{comment_panel_cat_nb(comment.category)}}].show" class="row panel comment-panel comment-panel-{{comment_panel_cat_nb(comment.category)}}" id="comment{{$index+1}}">
-                    <div class="col-md-12">
-                        <div class="comment-content">
-                            <p>
-                                <span class="comment-title"><span ng-bind="comment.user.displayName"></span> <i class="fa fa-comments-o"></i> <span ng-bind="comment.category"></span> </span><span class="comment-date" data-ng-bind="comment.created | date:'medium'"></span>
-                                <span class="comment-edit">
-                                    <i class="fa fa-link comment-edit"></i>
-                                </span>
-                                <span class="pull-right comment-edit">
-                                    <i ng-show="authentication.user" ng-click="show_answer[$index] = true" class="fa fa-comment"></i>
-
-                                    <i ng-click="comment.new_text = comment.text" ng-show="authentication.user._id == comment.user._id" class="fa fa-pencil-square-o"></i>
-                                    <i ng-click="sure_remove_comment[{{$index}}] = true" ng-show="authentication.user._id == comment.user._id && !sure_remove_comment[{{$index}}]" class="fa fa-trash"></i>
-                                    <span ng-show="sure_remove_comment[{{$index}}] && authentication.user._id == comment.user._id">Delete for sure ? <i ng-click="removeComment(comment)"  class="fa fa-trash yes"> yes</i> <i ng-click="sure_remove_comment[{{$index}}] = false"  class="fa fa-share-square no"> no</i></span>
-                                </span>
-                            </p>
-                            <p ng-hide="comment.new_text != null" class="comment-text" data-ng-bind-html="comment.text | linebrk"></p>
-                            <form ng-show="comment.new_text != null" data-ng-submit="update_comment(comment)" class="edit-comment-form" novalidate>
-                                <textarea class="form-control" ng-model="comment.new_text" placeholder="Edit comment here"></textarea>
-                                <input type="submit" onclick="return false;" class="hidden">
-                                <div class="form-group row">
-                                    <div class="col-xs-6">
-                                        <button class="btn btn-default btn-submit">Submit</button>
-                                    </div>
-                                    <div class="col-xs-6">
-                                        <a class="btn btn-default btn-submit" ng-click="comment.new_text = null">Cancel</a>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="comment-answers">
-                            <div ng-repeat="answer in comment.answers" class="comment-answer">
-                                <p><i class="fa fa-share"></i> <span ng-bind="answer.user.displayName"></span> answered on <span data-ng-bind="answer.created | date:'medium'"></span>
-                                    <span class="comment-edit">
-                                        <i ng-click="answer.new_text = answer.text" ng-show="authentication.user._id == answer.user._id" class="fa fa-pencil-square-o"></i>
-                                        <i ng-click="sure_remove_ansewr[{{$index}}] = true" ng-show="authentication.user._id == answer.user._id && !sure_remove_ansewr[{{$index}}]" class="fa fa-trash"></i>
-                                    <span ng-show="sure_remove_ansewr[{{$index}}] && authentication.user._id == answer.user._id">Delete for sure ? <i ng-click="removeComment(answer)"  class="fa fa-trash yes"> yes</i> <i ng-click="sure_remove_ansewr[{{$index}}] = false"  class="fa fa-share-square no"> no</i></span>
-                                    </span>
-                                </p>
-                                <p ng-hide="answer.new_text != null" class="comment-text" data-ng-bind-html="answer.text | linebrk"></p>
-                                <form ng-show="answer.new_text != null" data-ng-submit="update_comment(answer)" class="edit-comment-form" novalidate>
-                                    <textarea class="form-control" ng-model="answer.new_text" placeholder="Edit comment here"></textarea>
-                                    <input type="submit" onclick="return false;" class="hidden">
-                                    <div class="form-group row">
-                                        <div class="col-xs-6">
-                                            <button class="btn btn-default btn-submit">Submit</button>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <a class="btn btn-default btn-submit" ng-click="answer.new_text = null">Cancel</a>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="row comment-answer-form" ng-show="show_answer[$index]">
-
-                                <div class="col-md-12">
-                                    <form data-ng-submit="createanswer($index, comment._id)" novalidate>
-                                        <textarea class="form-control" ng-model="newanswer[$index].text" placeholder="Enter a new answer here"></textarea>
-                                        <input type="submit" onclick="return false;" class="hidden">
-                                        <div class="form-group">
-                                            <button class="btn btn-default btn-submit">Submit</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="comment-foot-form" ng-show="authentication.user">
-                <h4>New comment ? Choose a categorie : <span ng-repeat="category in event.comment_cats"> <span class="{{comment_cats_class_new($index)}} comment-cat comment-cat-{{$index}}" ng-bind="category.text" ng-click="comment_cats_disable_new($index)"></span></span></h4>
-                    <form ng-show="newcomment.category != ''" data-ng-submit="createcomment()" novalidate>
-                        <textarea class="form-control" data-ng-model="newcomment.text" placeholder="Enter a new comment here"></textarea>
-                        <input type="submit" onclick="return false;" class="hidden">
-                        <div class="form-group">
-                            <button class="btn btn-default btn-submit">Submit</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="alert alert-warning text-center" data-ng-hide="authentication.user">
-                    You want to add a comment ? You can <a href="/#!/signup">sign up</a> and add one.
-                </div>
-                <br />
-            </div>
-        </div>
+        <event-comments></event-comments>
 	</div>
 </section>
